@@ -39,4 +39,23 @@ public class Custumer {
         this.address = new Address(data.address());
 
     }
+
+    public void update(CustumerUpdateDto data) {
+        if(data.name() != null)
+            this.name = data.name();
+
+        if(data.email() != null)
+            this.email = data.email();
+
+        if(data.level() != null)
+            this.level = data.level();
+
+        if(data.emergencyContact() != null)
+            this.emergencyContact.update(data.emergencyContact());
+
+        if(data.address() != null)
+            this.address.update(data.address());
+
+
+    }
 }

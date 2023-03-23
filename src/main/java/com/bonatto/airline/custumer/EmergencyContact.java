@@ -16,4 +16,12 @@ public class EmergencyContact {
         this.emergencyName = emergencyContact.name();
         this.phone = emergencyContact.phone();
     }
+
+    public void update(EmergencyContactData data) {
+        if(data.name() != null)
+            this.emergencyName = data.name();
+
+        if(data.phone() != null)
+            this.phone = data.phone();
+    }
 }

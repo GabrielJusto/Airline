@@ -19,7 +19,7 @@ public class Address {
     private String zipCode;
     private String city;
 
-    private String State;
+    private String state;
     private String number;
     private String complement;
 
@@ -28,9 +28,32 @@ public class Address {
         this.district = address.district();
         this.zipCode = address.zipCode();
         this.city = address.city();
-        this.State = address.state();
+        this.state = address.state();
         this.number = address.number();
         this.complement = address.complement();
+    }
+
+    public void update(AdressData data) {
+        if(data.address() != null)
+            this.address = data.address();
+
+        if(data.district() != null)
+            this.district = data.district();
+
+        if(data.zipCode() != null)
+            this.zipCode = data.zipCode();
+
+        if(data.city() != null)
+            this.city = data.city();
+
+        if(data.state() != null)
+            this.state = data.state();
+
+        if(data.number() != null)
+            this.number = data.number();
+
+        if(data.complement() != null)
+            this.complement = data.complement();
     }
 }
 

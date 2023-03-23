@@ -1,16 +1,15 @@
 package com.bonatto.airline.controller;
 
 
-import com.bonatto.airline.custumer.Custumer;
-import com.bonatto.airline.custumer.CustumerDto;
-import com.bonatto.airline.custumer.CustumerRegisterData;
-import com.bonatto.airline.custumer.CustumerRepository;
+import com.bonatto.airline.custumer.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @RestController
@@ -33,6 +32,14 @@ public class CustumerController {
         return custumerRepository
                 .findAll(pageable)
                 .map( CustumerDto :: new);
+    }
+
+    @PutMapping("/update")
+    @Transactional
+    public void updateCustumer(@RequestBody @Valid CustumerUpdateDto data)
+    {
+        Custumer cus = custumerRepository.getReferenceById(data.id());
+        cus.update(data);
     }
 
 }
