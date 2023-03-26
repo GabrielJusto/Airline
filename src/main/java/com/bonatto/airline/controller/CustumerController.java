@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 
 @RestController
 @RequestMapping("/custumer")
@@ -18,28 +16,36 @@ public class CustumerController {
 
 
     @Autowired
-    private CustumerRepository custumerRepository;
+    private CustomerRepository customerRepository;
     @PostMapping
     @Transactional
-    public void register(@RequestBody @Valid CustumerRegisterData data)
+    public void register(@RequestBody @Valid CustomerRegisterData data)
     {
-        custumerRepository.save(new Custumer(data));
+        customerRepository.save(new Customer(data));
     }
 
     @GetMapping("/list")
-    public Page<CustumerDto> list (Pageable pageable)
+    public Page<CustomerDto> list (Pageable pageable)
     {
-        return custumerRepository
-                .findAll(pageable)
-                .map( CustumerDto :: new);
+        return customerRepository
+                .findAllByActiveTrue(pageable)
+                .map( CustomerDto:: new);
     }
 
     @PutMapping("/update")
     @Transactional
-    public void updateCustumer(@RequestBody @Valid CustumerUpdateDto data)
+    public void updateCustumer(@RequestBody @Valid CustomerUpdateDto data)
     {
-        Custumer cus = custumerRepository.getReferenceById(data.id());
+        Customer cus = customerRepository.getReferenceById(data.id());
         cus.update(data);
     }
+    @DeleteMapping("/delete/{id}")
+    @Transactional
+    public void deleteCustumer(@PathVariable Long id)
+    {
+        Customer cus = customerRepository.getReferenceById(id);
+        cus.deactivate();
+    }
+
 
 }

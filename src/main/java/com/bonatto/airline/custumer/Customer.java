@@ -14,24 +14,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode( of = "id")
-public class Custumer {
+public class Customer {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private boolean active;
     private String name;
     private String email;
-
     @Enumerated(EnumType.STRING)
     private Level level;
     @Embedded
     private EmergencyContact emergencyContact;
-
-
     @OneToOne( cascade=CascadeType.PERSIST)
     private Address address;
 
-    public Custumer(CustumerRegisterData data) {
+    public Customer(CustomerRegisterData data) {
+        this.active = true;
         this.name = data.name();
         this.email = data.email();
         this.level = data.level();
@@ -40,7 +38,7 @@ public class Custumer {
 
     }
 
-    public void update(CustumerUpdateDto data) {
+    public void update(CustomerUpdateDto data) {
         if(data.name() != null)
             this.name = data.name();
 
@@ -57,5 +55,9 @@ public class Custumer {
             this.address.update(data.address());
 
 
+    }
+
+    public void deactivate() {
+        this.active = false;
     }
 }
