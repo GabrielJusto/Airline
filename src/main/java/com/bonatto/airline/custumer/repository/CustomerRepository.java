@@ -1,5 +1,6 @@
-package com.bonatto.airline.custumer;
+package com.bonatto.airline.custumer.repository;
 
+import com.bonatto.airline.custumer.model.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

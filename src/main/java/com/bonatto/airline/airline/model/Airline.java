@@ -1,7 +1,7 @@
-package com.bonatto.airline.airline;
+package com.bonatto.airline.airline.model;
 
+import com.bonatto.airline.airline.dto.AirlineRegisterData;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +12,6 @@ public class Airline {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private String name;
 
     @OneToMany(mappedBy = "airline")
@@ -28,7 +27,7 @@ public class Airline {
         destinations = new LinkedList<>();
     }
 
-    public Airline(AirlineRegisterDto data)
+    public Airline(AirlineRegisterData data)
     {
         this.name = data.name();
         aircraftList = new LinkedList<>();

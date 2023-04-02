@@ -1,7 +1,10 @@
 package com.bonatto.airline.controller;
 
 
-import com.bonatto.airline.custumer.*;
+import com.bonatto.airline.custumer.dto.CustomerRegisterData;
+import com.bonatto.airline.custumer.dto.CustomerUpdateData;
+import com.bonatto.airline.custumer.model.Customer;
+import com.bonatto.airline.custumer.repository.CustomerRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,7 +37,7 @@ public class CustumerController {
 
     @PutMapping("/update")
     @Transactional
-    public void updateCustumer(@RequestBody @Valid CustomerUpdateDto data)
+    public void updateCustumer(@RequestBody @Valid CustomerUpdateData data)
     {
         Customer cus = customerRepository.getReferenceById(data.id());
         cus.update(data);

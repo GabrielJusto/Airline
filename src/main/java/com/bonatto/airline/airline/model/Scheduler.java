@@ -1,8 +1,7 @@
-package com.bonatto.airline.airline;
+package com.bonatto.airline.airline.model;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.LinkedList;

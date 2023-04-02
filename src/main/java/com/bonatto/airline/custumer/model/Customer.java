@@ -1,7 +1,9 @@
-package com.bonatto.airline.custumer;
+package com.bonatto.airline.custumer.model;
 
 
 import com.bonatto.airline.address.Address;
+import com.bonatto.airline.custumer.dto.CustomerRegisterData;
+import com.bonatto.airline.custumer.dto.CustomerUpdateData;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -38,7 +40,7 @@ public class Customer {
 
     }
 
-    public void update(CustomerUpdateDto data) {
+    public void update(CustomerUpdateData data) {
         if(data.name() != null)
             this.name = data.name();
 

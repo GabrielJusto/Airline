@@ -1,11 +1,12 @@
-package com.bonatto.airline.custumer;
+package com.bonatto.airline.custumer.dto;
 
 import com.bonatto.airline.address.AdressData;
+import com.bonatto.airline.custumer.model.Level;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
-public record CustomerUpdateDto(
+public record CustomerUpdateData(
 
         @NotNull
         Long id,
