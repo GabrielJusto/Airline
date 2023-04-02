@@ -4,6 +4,7 @@ package com.bonatto.airline.controller;
 import com.bonatto.airline.custumer.dto.CustomerRegisterData;
 import com.bonatto.airline.custumer.dto.CustomerUpdateData;
 import com.bonatto.airline.custumer.model.Customer;
+import com.bonatto.airline.custumer.model.CustomerData;
 import com.bonatto.airline.custumer.repository.CustomerRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,11 @@ public class CustumerController {
     }
 
     @GetMapping("/list")
-    public Page<CustomerDto> list (Pageable pageable)
+    public Page<CustomerData> list (Pageable pageable)
     {
         return customerRepository
                 .findAllByActiveTrue(pageable)
-                .map( CustomerDto:: new);
+                .map( CustomerData:: new);
     }
 
     @PutMapping("/update")
