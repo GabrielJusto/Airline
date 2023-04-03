@@ -3,7 +3,6 @@ package com.bonatto.airline.airline.model;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 import java.time.LocalDate;
 
 @AllArgsConstructor

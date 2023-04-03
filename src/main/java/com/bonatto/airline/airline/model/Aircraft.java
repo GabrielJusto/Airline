@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Optional;
 
-@Entity
+@Entity(name="Aircraft")
+@Table(name= "aircraft")
 @NoArgsConstructor
 public class Aircraft {
 

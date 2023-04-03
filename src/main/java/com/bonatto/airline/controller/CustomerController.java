@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/custumer")
-public class CustumerController {
+@RequestMapping("/customer")
+public class CustomerController {
 
 
     @Autowired
@@ -38,14 +38,14 @@ public class CustumerController {
 
     @PutMapping("/update")
     @Transactional
-    public void updateCustumer(@RequestBody @Valid CustomerUpdateData data)
+    public void updateCustomer(@RequestBody @Valid CustomerUpdateData data)
     {
         Customer cus = customerRepository.getReferenceById(data.id());
         cus.update(data);
     }
     @DeleteMapping("/delete/{id}")
     @Transactional
-    public void deleteCustumer(@PathVariable Long id)
+    public void deleteCustomer(@PathVariable Long id)
     {
         Customer cus = customerRepository.getReferenceById(id);
         cus.deactivate();
