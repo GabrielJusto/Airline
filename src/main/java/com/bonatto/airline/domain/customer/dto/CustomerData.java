@@ -1,4 +1,7 @@
-package com.bonatto.airline.domain.customer.model;
+package com.bonatto.airline.domain.customer.dto;
+
+import com.bonatto.airline.domain.customer.model.Customer;
+import com.bonatto.airline.domain.customer.model.Level;
 
 public record CustomerData(Long id, String name, String email, Level level)
 {

@@ -4,7 +4,7 @@ package com.bonatto.airline.controller;
 import com.bonatto.airline.domain.customer.dto.CustomerRegisterData;
 import com.bonatto.airline.domain.customer.dto.CustomerUpdateData;
 import com.bonatto.airline.domain.customer.model.Customer;
-import com.bonatto.airline.domain.customer.model.CustomerData;
+import com.bonatto.airline.domain.customer.dto.CustomerData;
 import com.bonatto.airline.domain.customer.repository.CustomerRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
