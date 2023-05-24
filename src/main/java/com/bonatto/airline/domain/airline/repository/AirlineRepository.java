@@ -1,6 +1,6 @@
-package com.bonatto.airline.airline.repository;
+package com.bonatto.airline.domain.airline.repository;
 
-import com.bonatto.airline.airline.model.Airline;
+import com.bonatto.airline.domain.airline.model.Airline;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

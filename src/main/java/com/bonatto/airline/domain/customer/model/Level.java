@@ -1,4 +1,4 @@
-package com.bonatto.airline.custumer.model;
+package com.bonatto.airline.domain.customer.model;
 
 public enum Level {
     STANDARD,

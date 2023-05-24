@@ -1,4 +1,4 @@
-package com.bonatto.airline.address;
+package com.bonatto.airline.domain.address;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

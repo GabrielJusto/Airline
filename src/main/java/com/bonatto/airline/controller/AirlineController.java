@@ -1,10 +1,10 @@
 package com.bonatto.airline.controller;
 
 
-import com.bonatto.airline.airline.dto.AirlineData;
-import com.bonatto.airline.airline.dto.AirlineRegisterData;
-import com.bonatto.airline.airline.model.Airline;
-import com.bonatto.airline.airline.repository.AirlineRepository;
+import com.bonatto.airline.domain.airline.dto.AirlineData;
+import com.bonatto.airline.domain.airline.dto.AirlineRegisterData;
+import com.bonatto.airline.domain.airline.model.Airline;
+import com.bonatto.airline.domain.airline.repository.AirlineRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

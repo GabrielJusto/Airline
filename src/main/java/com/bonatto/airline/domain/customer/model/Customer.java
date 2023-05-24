@@ -1,9 +1,9 @@
-package com.bonatto.airline.custumer.model;
+package com.bonatto.airline.domain.customer.model;
 
 
-import com.bonatto.airline.address.Address;
-import com.bonatto.airline.custumer.dto.CustomerRegisterData;
-import com.bonatto.airline.custumer.dto.CustomerUpdateData;
+import com.bonatto.airline.domain.address.Address;
+import com.bonatto.airline.domain.customer.dto.CustomerRegisterData;
+import com.bonatto.airline.domain.customer.dto.CustomerUpdateData;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

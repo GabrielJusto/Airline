@@ -1,7 +1,7 @@
-package com.bonatto.airline.airline.model;
+package com.bonatto.airline.domain.airline.model;
 
-import com.bonatto.airline.airline.dto.AircraftRegisterData;
-import com.bonatto.airline.airline.repository.AirlineRepository;
+import com.bonatto.airline.domain.airline.dto.AircraftRegisterData;
+import com.bonatto.airline.domain.airline.repository.AirlineRepository;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 

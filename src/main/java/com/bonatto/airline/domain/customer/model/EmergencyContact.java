@@ -1,6 +1,6 @@
-package com.bonatto.airline.custumer.model;
+package com.bonatto.airline.domain.customer.model;
 
-import com.bonatto.airline.custumer.dto.EmergencyContactData;
+import com.bonatto.airline.domain.customer.dto.EmergencyContactData;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

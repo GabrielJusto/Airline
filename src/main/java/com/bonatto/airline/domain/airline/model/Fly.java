@@ -1,4 +1,4 @@
-package com.bonatto.airline.airline.model;
+package com.bonatto.airline.domain.airline.model;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

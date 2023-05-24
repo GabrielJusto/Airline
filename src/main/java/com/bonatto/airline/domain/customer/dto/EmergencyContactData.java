@@ -1,4 +1,4 @@
-package com.bonatto.airline.custumer.dto;
+package com.bonatto.airline.domain.customer.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

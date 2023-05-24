@@ -1,7 +1,7 @@
-package com.bonatto.airline.custumer.dto;
+package com.bonatto.airline.domain.customer.dto;
 
-import com.bonatto.airline.address.AdressData;
-import com.bonatto.airline.custumer.model.Level;
+import com.bonatto.airline.domain.address.AdressData;
+import com.bonatto.airline.domain.customer.model.Level;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

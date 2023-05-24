@@ -1,6 +1,6 @@
-package com.bonatto.airline.airline.model;
+package com.bonatto.airline.domain.airline.model;
 
-import com.bonatto.airline.airline.dto.AirlineRegisterData;
+import com.bonatto.airline.domain.airline.dto.AirlineRegisterData;
 import jakarta.persistence.*;
 import lombok.Getter;
 import java.util.LinkedList;
