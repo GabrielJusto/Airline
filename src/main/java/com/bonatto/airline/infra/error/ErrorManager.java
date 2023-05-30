@@ -1,4 +1,4 @@
-package com.bonatto.airline.infra;
+package com.bonatto.airline.infra.error;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
