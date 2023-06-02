@@ -3,12 +3,14 @@ package com.bonatto.airline.domain.address;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "Address")
 @Table(name = "address")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @EqualsAndHashCode( of = "id")
 public class Address {
 

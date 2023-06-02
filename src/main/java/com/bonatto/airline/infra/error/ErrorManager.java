@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ErrorManager
 {
 
-    @ExceptionHandler(EntityNotFoundException.class)
+    @SuppressWarnings("rawtypes")
+	@ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity manage404()
     {
         return ResponseEntity.notFound().build();
     }
-
+    
+    
+    @SuppressWarnings("rawtypes")
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity manage400(MethodArgumentNotValidException e)
     {

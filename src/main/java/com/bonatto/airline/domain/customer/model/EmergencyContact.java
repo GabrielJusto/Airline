@@ -3,11 +3,13 @@ package com.bonatto.airline.domain.customer.model;
 import com.bonatto.airline.domain.customer.dto.EmergencyContactData;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class EmergencyContact {
 
     private String emergencyName;

@@ -25,7 +25,11 @@ public class CustomerController {
 
     @Autowired
     private CustomerRepository customerRepository;
-    @PostMapping
+    
+    
+    
+    @SuppressWarnings("rawtypes")
+	@PostMapping
     @Transactional
     public ResponseEntity register(@RequestBody @Valid CustomerRegisterData data, UriComponentsBuilder uriBuilder)
     {
@@ -38,7 +42,7 @@ public class CustomerController {
         return ResponseEntity.created(uri).body(new CustomerData(c));
     }
 
-
+    @SuppressWarnings("rawtypes")
     @GetMapping("/{id}")
     public ResponseEntity detail(@PathVariable Long id)
     {
@@ -69,6 +73,8 @@ public class CustomerController {
 
         return ResponseEntity.ok(new CustomerData(cus));
     }
+    
+    @SuppressWarnings("rawtypes")
     @DeleteMapping("/delete/{id}")
     @Transactional
     public ResponseEntity deleteCustomer(@PathVariable Long id)
