@@ -1,6 +1,9 @@
 package com.bonatto.airline.controller;
 
 import com.bonatto.airline.domain.user.dto.AuthenticationData;
+import com.bonatto.airline.domain.user.model.User;
+import com.bonatto.airline.infra.security.TokenJwtData;
+import com.bonatto.airline.infra.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +21,19 @@ public class AuthenticationController {
 
     @Autowired
     private AuthenticationManager manager;
+
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping
     public ResponseEntity login( @RequestBody @Valid AuthenticationData data)
     {
-        Authentication token = new UsernamePasswordAuthenticationToken(data.login(), data.password());
-        Authentication authentication =  manager.authenticate(token);
+        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+        Authentication authentication =  manager.authenticate(authenticationToken);
 
-        return ResponseEntity.ok().build();
+        String tokenJWT = tokenService.generateToken((User) authentication.getPrincipal());
+
+        return ResponseEntity.ok(new TokenJwtData(tokenJWT));
     }
 
 }
