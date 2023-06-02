@@ -37,7 +37,7 @@ public class CustomerController {
     
     
     @SuppressWarnings("rawtypes")
-	@PutMapping("/cadastrar")
+	@PutMapping("/register")
     @Transactional
     public ResponseEntity register(@RequestBody @Valid CustomerRegisterData data, UriComponentsBuilder uriBuilder)
     {
@@ -61,7 +61,7 @@ public class CustomerController {
     @GetMapping("/list")
     public ResponseEntity<Page<CustomerData>> list (Pageable pageable)
     {
-        var page = customerRepository
+        Page<CustomerData> page = customerRepository
                 .findAllByActiveTrue(pageable)
                 .map( CustomerData:: new);
 
