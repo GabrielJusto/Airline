@@ -3,15 +3,10 @@ package com.bonatto.airline.domain.airline.model;
 import java.util.Optional;
 
 import com.bonatto.airline.domain.airline.dto.AircraftRegisterData;
+import com.bonatto.airline.domain.airline.dto.AircraftUpdateData;
 import com.bonatto.airline.domain.airline.repository.AirlineRepository;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -53,8 +48,24 @@ public class Aircraft {
         this.passengerCapacity = data.passengerCapacity();
         this.takeoffWeight = data.takeoffWeight();
         this.aircraftRange = data.aircraftRange();
-
-
-
     }
+
+
+    public void update(AircraftUpdateData data, AirlineRepository repo)
+    {
+        if(data.airlineId() != null && data.airlineId() != this.airline.getId())
+        {
+
+            Optional<Airline> airlineOp = repo.findById(data.airlineId());
+            if(airlineOp.isEmpty())
+                throw new EntityNotFoundException();
+
+
+            this.airline = airlineOp.get();
+        }
+
+        if(data.passengerCapacity() != 0 && data.passengerCapacity() != this.passengerCapacity)
+            this.passengerCapacity = data.passengerCapacity();
+    }
+
 }

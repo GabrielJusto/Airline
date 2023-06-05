@@ -2,6 +2,7 @@ package com.bonatto.airline.controller;
 
 import java.net.URI;
 
+import com.bonatto.airline.domain.airline.dto.AircraftUpdateData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,16 +27,16 @@ public class AircraftController {
     private AircraftRepository aircraftRepo;
 
     @Autowired
-    private AirlineRepository airlineRepository;
+    private AirlineRepository airlineRepo;
 
     @SuppressWarnings("rawtypes")
 	@PutMapping("/register")
     @Transactional
     public ResponseEntity registerAircraft(@Valid @RequestBody AircraftRegisterData data, UriComponentsBuilder uriBuilder)
     {
-        Aircraft aircraft = new Aircraft(data, airlineRepository);
+        Aircraft aircraft = new Aircraft(data, airlineRepo);
 		aircraftRepo.save(aircraft);
-		
+
 		URI uri = uriBuilder.path("/aircraft/{id}").buildAndExpand(aircraft.getId()).toUri();
         return ResponseEntity.created(uri).body(new AircraftDetailData(aircraft));
     }
@@ -60,7 +61,7 @@ public class AircraftController {
     	
     	return ResponseEntity.ok(page);
     }
-
+    @SuppressWarnings("rawtypes")
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Long id)
     {
@@ -68,6 +69,19 @@ public class AircraftController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @SuppressWarnings("rawtypes")
+    @PostMapping("/update")
+    @Transactional
+    public ResponseEntity update (@RequestBody @Valid AircraftUpdateData data)
+    {
+        Aircraft aircraft = aircraftRepo.getReferenceById(data.id());
+        aircraft.update(data, airlineRepo);
+
+       return ResponseEntity.ok(new AircraftDetailData(aircraft));
+    }
+
+
 }
 
 
