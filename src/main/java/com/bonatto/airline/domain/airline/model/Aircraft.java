@@ -30,8 +30,6 @@ public class Aircraft {
 
     private double aircraftRange;
 
-    @Embedded
-    private Scheduler scheduler;
 
 
     public Aircraft(AircraftRegisterData data, AirlineRepository airlineRepo)

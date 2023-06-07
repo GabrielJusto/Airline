@@ -1,10 +1,19 @@
 package com.bonatto.airline.domain.airline.model;
 
-import com.bonatto.airline.domain.airline.dto.AirlineRegisterData;
-import jakarta.persistence.*;
-import lombok.Getter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import com.bonatto.airline.domain.airline.dto.AirlineRegisterData;
+
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.Getter;
 
 @Entity(name= "Airline")
 @Table(name= "airline")
@@ -22,6 +31,9 @@ public class Airline {
 
     @ElementCollection
     private List<String> destinations;
+    
+    @OneToMany(mappedBy = "airline")
+    private List<Flight> flights;
 
 
     public Airline()
@@ -29,6 +41,7 @@ public class Airline {
         this.active = true;
         aircraftList = new LinkedList<>();
         destinations = new LinkedList<>();
+        flights = new ArrayList<>();
     }
 
     public Airline(AirlineRegisterData data)
@@ -37,6 +50,7 @@ public class Airline {
         this.name = data.name();
         aircraftList = new LinkedList<>();
         destinations = new LinkedList<>();
+        flights = new ArrayList<>();
     }
 
     public void deactivate() {
