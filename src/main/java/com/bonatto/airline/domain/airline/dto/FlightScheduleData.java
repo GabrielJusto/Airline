@@ -7,10 +7,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 
-public record FlighScheduleData(
+public record FlightScheduleData(
 		
-		@NotNull
-		Long airlineId,
 		
 		@NotNull
 		Long aircfraftId,

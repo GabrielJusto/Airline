@@ -61,9 +61,9 @@ public class AirlineController {
     @GetMapping("/list")
     public ResponseEntity  list (Pageable pageable)
     {
-    	Page<AirlineData> page = repo
+    	Page<AirlineDetailData> page = repo
                 .findAllByActiveTrue(pageable)
-                .map( AirlineData:: new);
+                .map( AirlineDetailData:: new);
     	
         return ResponseEntity.ok(page);
     }

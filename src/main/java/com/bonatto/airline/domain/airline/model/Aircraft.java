@@ -1,18 +1,29 @@
 package com.bonatto.airline.domain.airline.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.bonatto.airline.domain.airline.dto.AircraftRegisterData;
 import com.bonatto.airline.domain.airline.dto.AircraftUpdateData;
 import com.bonatto.airline.domain.airline.repository.AirlineRepository;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity(name="Aircraft")
 @Table(name= "aircraft")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class Aircraft {
 
@@ -29,6 +40,9 @@ public class Aircraft {
     private double takeoffWeight;
 
     private double aircraftRange;
+    
+    @OneToMany(mappedBy = "aircraft")
+    private List<Flight> flights;
 
 
 
@@ -46,6 +60,8 @@ public class Aircraft {
         this.passengerCapacity = data.passengerCapacity();
         this.takeoffWeight = data.takeoffWeight();
         this.aircraftRange = data.aircraftRange();
+        
+        this.flights = new ArrayList<>();
     }
 
 

@@ -1,6 +1,5 @@
 package com.bonatto.airline.domain.airline.model;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,8 +31,7 @@ public class Airline {
     @ElementCollection
     private List<String> destinations;
     
-    @OneToMany(mappedBy = "airline")
-    private List<Flight> flights;
+
 
 
     public Airline()
@@ -41,7 +39,6 @@ public class Airline {
         this.active = true;
         aircraftList = new LinkedList<>();
         destinations = new LinkedList<>();
-        flights = new ArrayList<>();
     }
 
     public Airline(AirlineRegisterData data)
@@ -50,7 +47,6 @@ public class Airline {
         this.name = data.name();
         aircraftList = new LinkedList<>();
         destinations = new LinkedList<>();
-        flights = new ArrayList<>();
     }
 
     public void deactivate() {
