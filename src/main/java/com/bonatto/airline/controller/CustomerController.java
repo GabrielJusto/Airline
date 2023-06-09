@@ -23,11 +23,13 @@ import com.bonatto.airline.domain.customer.dto.CustomerUpdateData;
 import com.bonatto.airline.domain.customer.model.Customer;
 import com.bonatto.airline.domain.customer.repository.CustomerRepository;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 
 @RestController
 @RequestMapping("/customer")
+@SecurityRequirement(name = "bearer-key")
 public class CustomerController {
 
 

@@ -17,16 +17,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.bonatto.airline.domain.airline.dto.AirlineData;
 import com.bonatto.airline.domain.airline.dto.AirlineDetailData;
 import com.bonatto.airline.domain.airline.dto.AirlineRegisterData;
 import com.bonatto.airline.domain.airline.model.Airline;
 import com.bonatto.airline.domain.airline.repository.AirlineRepository;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("airline")
+@SecurityRequirement(name = "bearer-key")
 public class AirlineController {
 
     @Autowired

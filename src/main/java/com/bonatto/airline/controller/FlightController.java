@@ -14,10 +14,12 @@ import com.bonatto.airline.domain.airline.dto.FlightScheduleData;
 import com.bonatto.airline.domain.airline.dto.FlightScheduleDetailData;
 import com.bonatto.airline.domain.airline.service.FlightScheduleService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/flight")
+@SecurityRequirement(name = "bearer-key")
 public class FlightController {
 	
 	@Autowired
