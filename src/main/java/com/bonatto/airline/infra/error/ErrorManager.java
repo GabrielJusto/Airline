@@ -11,6 +11,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ErrorManager
 {
 
+	
+	@SuppressWarnings("rawtypes")
+	@ExceptionHandler(RegisterException.class)
+	public ResponseEntity registerError(RegisterException e)
+	{
+		return ResponseEntity.badRequest().body(e.getMessage());
+	}
+	
     @SuppressWarnings("rawtypes")
 	@ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity manage404()
