@@ -1,7 +1,10 @@
 package com.bonatto.airline.controller;
 
-import java.net.URI;
-
+import com.bonatto.airline.domain.airline.dto.FlightScheduleData;
+import com.bonatto.airline.domain.airline.dto.FlightScheduleDetailData;
+import com.bonatto.airline.domain.airline.service.FlightScheduleService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -10,12 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.bonatto.airline.domain.airline.dto.FlightScheduleData;
-import com.bonatto.airline.domain.airline.dto.FlightScheduleDetailData;
-import com.bonatto.airline.domain.airline.service.FlightScheduleService;
-
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import jakarta.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/flight")

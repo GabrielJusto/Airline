@@ -1,14 +1,13 @@
 package com.bonatto.airline.domain.validation;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.bonatto.airline.domain.airline.dto.FlightScheduleData;
 import com.bonatto.airline.domain.airline.model.Flight;
 import com.bonatto.airline.domain.airline.repository.FlightRepository;
 import com.bonatto.airline.infra.error.RegisterException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class FlightScheduleTimeValidator implements FlightScheduleValidation {

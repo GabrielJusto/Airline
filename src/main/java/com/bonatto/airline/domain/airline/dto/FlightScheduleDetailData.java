@@ -1,8 +1,8 @@
 package com.bonatto.airline.domain.airline.dto;
 
-import java.time.LocalDateTime;
-
 import com.bonatto.airline.domain.airline.model.Flight;
+
+import java.time.LocalDateTime;
 
 public record FlightScheduleDetailData(
 		

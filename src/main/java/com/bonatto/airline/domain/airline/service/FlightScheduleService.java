@@ -1,10 +1,5 @@
 package com.bonatto.airline.domain.airline.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.bonatto.airline.domain.airline.dto.FlightScheduleData;
 import com.bonatto.airline.domain.airline.dto.FlightScheduleDetailData;
 import com.bonatto.airline.domain.airline.model.Aircraft;
@@ -13,6 +8,10 @@ import com.bonatto.airline.domain.airline.repository.AircraftRepository;
 import com.bonatto.airline.domain.airline.repository.FlightRepository;
 import com.bonatto.airline.domain.validation.FlightScheduleValidation;
 import com.bonatto.airline.infra.error.RegisterException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class FlightScheduleService {

@@ -1,5 +1,10 @@
 package com.bonatto.airline.controller;
 
+import com.bonatto.airline.domain.user.dto.AuthenticationData;
+import com.bonatto.airline.domain.user.model.User;
+import com.bonatto.airline.infra.security.TokenJwtData;
+import com.bonatto.airline.infra.security.TokenService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,13 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.bonatto.airline.domain.user.dto.AuthenticationData;
-import com.bonatto.airline.domain.user.model.User;
-import com.bonatto.airline.infra.security.TokenJwtData;
-import com.bonatto.airline.infra.security.TokenService;
-
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/login")
