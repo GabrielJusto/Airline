@@ -9,7 +9,7 @@ public record FlightScheduleDetailData(
 		Long id,
 		AircraftDetailData aircraft,
 		LocalDateTime departure,
-		LocalDateTime arraival
+		LocalDateTime arrival
 		
 		) {
 

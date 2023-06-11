@@ -32,7 +32,7 @@ public class AuthenticationController {
     {
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         Authentication authentication =  manager.authenticate(authenticationToken);
-
+        System.out.println(data.login());
         String tokenJWT = tokenService.generateToken((User) authentication.getPrincipal());
 
         return ResponseEntity.ok(new TokenJwtData(tokenJWT));
