@@ -94,5 +94,6 @@ class FlightControllerTest {
 
         assertThat(response.getContentAsString()).isEqualTo(responseJson);
     }
+    
 
 }

@@ -8,12 +8,16 @@ import com.bonatto.airline.domain.airline.repository.AircraftRepository;
 import com.bonatto.airline.domain.airline.repository.FlightRepository;
 import com.bonatto.airline.domain.validation.FlightScheduleValidation;
 import com.bonatto.airline.infra.error.RegisterException;
+
+import lombok.AllArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class FlightScheduleService {
 
 	
