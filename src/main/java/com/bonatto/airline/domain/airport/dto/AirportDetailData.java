@@ -2,16 +2,17 @@ package com.bonatto.airline.domain.airport.dto;
 
 import com.bonatto.airline.domain.airport.model.Airport;
 
-public record AirprotDetailData(
+public record AirportDetailData(
+		Long id,
 		String code,
 		String city
 		
 		) {
 	
 	
-	public AirprotDetailData(Airport data)
+	public AirportDetailData(Airport data)
 	{
-		this(data.getCode(), data.getCity());
+		this(data.getId(), data.getCode(), data.getCity());
 	}
 
 }
