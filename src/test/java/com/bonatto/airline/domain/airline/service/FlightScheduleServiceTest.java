@@ -31,6 +31,7 @@ import com.bonatto.airline.domain.airline.model.Airline;
 import com.bonatto.airline.domain.airline.model.Flight;
 import com.bonatto.airline.domain.airline.repository.AircraftRepository;
 import com.bonatto.airline.domain.airline.repository.FlightRepository;
+import com.bonatto.airline.domain.airport.repository.AirportRepository;
 import com.bonatto.airline.domain.validation.FlightScheduleValidation;
 import com.bonatto.airline.infra.error.RegisterException;
 
@@ -55,6 +56,9 @@ class FlightScheduleServiceTest {
 	@Mock
     private FlightRepository flightRepo;
 	
+	@Mock
+	private AirportRepository airportRepo;
+	
 	
     @Mock
     private List<FlightScheduleValidation> validators;
@@ -64,7 +68,7 @@ class FlightScheduleServiceTest {
     @BeforeEach
     void setUp()
     {
-    	flightService = new FlightScheduleService(aircraftRepo, flightRepo, validators);
+    	flightService = new FlightScheduleService(aircraftRepo, flightRepo, airportRepo, validators);
     }
     
 	@Test
@@ -75,7 +79,9 @@ class FlightScheduleServiceTest {
 		
 		FlightScheduleData scheduleData = new FlightScheduleData(1l,
 					LocalDateTime.of(2023, Month.JANUARY, 1, 10, 0, 0), 
-					LocalDateTime.of(2023, Month.JANUARY, 1, 14, 0, 0));
+					LocalDateTime.of(2023, Month.JANUARY, 1, 14, 0, 0),
+					"POA",
+					"SAO");
 		
 		  RegisterException thrown = assertThrows(RegisterException.class, () -> {
 			  flightService.schedule(scheduleData);
@@ -103,7 +109,7 @@ class FlightScheduleServiceTest {
 		 when(aircraftRepo.existsById(1l)).thenReturn(true);
 		 when(aircraftRepo.getReferenceById(any())).thenReturn(aircraft);
 		 
-		 FlightScheduleData scheduleData = new FlightScheduleData(1l, departure, arrival);
+		 FlightScheduleData scheduleData = new FlightScheduleData(1l, departure, arrival, "POA", "SAO");
 		 	
 		 //when
 		 

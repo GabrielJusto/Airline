@@ -1,20 +1,25 @@
 package com.bonatto.airline.domain.airport.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import com.bonatto.airline.domain.airline.model.Flight;
 import com.bonatto.airline.domain.airport.dto.AirportRegisterData;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Entity(name = "Airport")
+@Table(name = "airport")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -30,6 +35,13 @@ public class Airport {
 	private String code;
 	private String city;
 	private String country;
+	
+	@OneToMany(mappedBy = "source")
+	private List<Flight> sources;
+	
+	@OneToMany(mappedBy = "destination")
+	private List<Flight> detinations;
+	
 	
 	
 	public Airport(AirportRegisterData data)

@@ -58,7 +58,7 @@ class FlightScheduleTimeValidatorTest {
 		Assertions.assertThatExceptionOfType(RegisterException.class)
 						.isThrownBy(
 								() -> validator.validate(
-										new FlightScheduleData(1l, LocalDateTime.now(), LocalDateTime.now().plusHours(1))));
+										new FlightScheduleData(1l, LocalDateTime.now(), LocalDateTime.now().plusHours(1),"POA", "SAO")));
 	}
 	
 	
@@ -71,7 +71,7 @@ class FlightScheduleTimeValidatorTest {
 
 		//when
 		validator.validate(
-				new FlightScheduleData(1l, LocalDateTime.now(), LocalDateTime.now().plusHours(1)));
+				new FlightScheduleData(1l, LocalDateTime.now(), LocalDateTime.now().plusHours(1), "POA", "SAO"));
 		//then
 		
 		//Expect no exceptions

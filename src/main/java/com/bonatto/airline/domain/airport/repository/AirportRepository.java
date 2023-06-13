@@ -6,4 +6,8 @@ import com.bonatto.airline.domain.airport.model.Airport;
 
 public interface AirportRepository extends JpaRepository<Airport, Long>{
 
+	
+	Airport getReferenceByCode(String code);
+	
+	boolean existsByCode(String code);
 }

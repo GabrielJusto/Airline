@@ -18,7 +18,11 @@ public record FlightScheduleData(
 		
 		@Future
 		@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-		LocalDateTime arrival
+		LocalDateTime arrival,
+		
+		String sourceCode,
+		
+		String destinatoinCode
 		
 		) {
 

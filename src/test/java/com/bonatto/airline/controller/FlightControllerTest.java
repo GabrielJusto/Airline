@@ -81,7 +81,9 @@ class FlightControllerTest {
                                         new FlightScheduleData(
                                                 aircraftId,
                                                 departure,
-                                                arrival
+                                                arrival,
+                                                "POA",
+                                                "SAO"
                                         )
                                 ).getJson())
                         )
