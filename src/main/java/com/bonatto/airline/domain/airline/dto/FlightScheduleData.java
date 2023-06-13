@@ -22,7 +22,7 @@ public record FlightScheduleData(
 		
 		String sourceCode,
 		
-		String destinatoinCode
+		String destinationCode
 		
 		) {
 

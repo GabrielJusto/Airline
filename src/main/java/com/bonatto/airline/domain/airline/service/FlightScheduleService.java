@@ -49,7 +49,7 @@ public class FlightScheduleService {
 		
 		Aircraft aircraft = aircraftRepo.getReferenceById(data.aircfraftId());
 		Airport source = airportRepo.getReferenceByCode(data.sourceCode());
-		Airport destination = airportRepo.getReferenceByCode(data.destinatoinCode());
+		Airport destination = airportRepo.getReferenceByCode(data.destinationCode());
 		Flight flight = new Flight(aircraft, source, destination, data);
 		
 		

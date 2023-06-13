@@ -69,12 +69,11 @@ class FlightScheduleTimeValidatorTest {
 		//given
 		when(flightRepo.findByDate(any(), any())).thenReturn(Optional.empty());
 
-		//when
-		validator.validate(
-				new FlightScheduleData(1l, LocalDateTime.now(), LocalDateTime.now().plusHours(1), "POA", "SAO"));
-		//then
-		
-		//Expect no exceptions
+		//when / then
+		Assertions.assertThatCode(() -> validator.validate(
+				new FlightScheduleData(1l, LocalDateTime.now(), LocalDateTime.now().plusHours(1), "POA", "SAO")))
+		.doesNotThrowAnyException();
+
 	}
 	
 	
