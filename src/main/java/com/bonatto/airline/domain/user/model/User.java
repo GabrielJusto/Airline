@@ -30,7 +30,11 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
-
+    public User(String username, String password) {
+    	this.username = username;
+    	this.password = password;
+    }
+   
 
 
     @Override
@@ -57,4 +61,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

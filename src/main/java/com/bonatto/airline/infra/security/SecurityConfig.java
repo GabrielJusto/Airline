@@ -1,6 +1,9 @@
 package com.bonatto.airline.infra.security;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +13,9 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -31,6 +36,7 @@ public class SecurityConfig {
                 .and().authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
                 .requestMatchers( "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/user/register").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
@@ -45,6 +51,11 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder ()
     {
-        return new BCryptPasswordEncoder();
+    	String idForEncode = "bcrypt";
+    	Map<String, PasswordEncoder> encoders = new HashMap<>();
+    	encoders.put(idForEncode, new BCryptPasswordEncoder(10));
+    	encoders.put("argon2", Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8());
+    	
+        return new DelegatingPasswordEncoder(idForEncode, encoders);
     }
 }
