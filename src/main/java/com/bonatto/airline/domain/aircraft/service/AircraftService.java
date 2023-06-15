@@ -62,6 +62,9 @@ public class AircraftService {
 				.map(s -> new Seat(s, aircraft))
 				.collect(Collectors.toList()));
 	}
+
+
+	
 }
 
 

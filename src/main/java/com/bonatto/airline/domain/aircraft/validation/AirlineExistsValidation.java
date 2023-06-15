@@ -7,7 +7,10 @@ import com.bonatto.airline.domain.aircraft.dto.AircraftRegisterData;
 import com.bonatto.airline.domain.airline.repository.AirlineRepository;
 import com.bonatto.airline.infra.error.RegisterException;
 
+import lombok.AllArgsConstructor;
+
 @Component
+@AllArgsConstructor
 public class AirlineExistsValidation implements AircraftRegisterValidation {
 
 	
