@@ -38,6 +38,8 @@ class FlightRepositoryTest {
 
 	@Autowired
 	private TestEntityManager em;
+	
+	private Aircraft aircraft;
 
 
 
@@ -45,7 +47,7 @@ class FlightRepositoryTest {
 	public void setScenario()
 	{
 		Airline airline = registerAirline();
-		Aircraft aircraft = registerAircraft(airline);
+		this.aircraft = registerAircraft(airline);
 		Airport source = registerSource();
 		Airport destination = registerDestination();
 		registerFlight(LocalDateTime.of(2023, Month.JANUARY, 1, 15, 0),
@@ -60,7 +62,7 @@ class FlightRepositoryTest {
 		LocalDateTime departure = LocalDateTime.of(2023, Month.JANUARY, 1, 10, 0);
 		LocalDateTime arrival = LocalDateTime.of(2023, Month.JANUARY, 1, 14, 0);
 
-		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival);
+		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival, this.aircraft.getId());
 
 		assertThat(optFlight.isEmpty()).isTrue();
 	}
@@ -72,7 +74,7 @@ class FlightRepositoryTest {
 		LocalDateTime departure = LocalDateTime.of(2023, Month.JANUARY, 1, 19, 0);
 		LocalDateTime arrival = LocalDateTime.of(2023, Month.JANUARY, 1, 20, 0);
 
-		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival);
+		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival, this.aircraft.getId());
 
 		assertThat(optFlight.isEmpty()).isTrue();
 	}
@@ -85,7 +87,7 @@ class FlightRepositoryTest {
 		LocalDateTime departure = LocalDateTime.of(2023, Month.JANUARY, 1, 16, 0);
 		LocalDateTime arrival = LocalDateTime.of(2023, Month.JANUARY, 1, 19, 0);
 
-		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival);
+		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival, this.aircraft.getId());
 
 		assertThat(optFlight.isPresent()).isTrue();
 	}
@@ -98,7 +100,7 @@ class FlightRepositoryTest {
 		LocalDateTime departure = LocalDateTime.of(2023, Month.JANUARY, 1, 10, 0);
 		LocalDateTime arrival = LocalDateTime.of(2023, Month.JANUARY, 1, 16, 0);
 
-		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival);
+		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival, this.aircraft.getId());
 
 		assertThat(optFlight.isPresent()).isTrue();
 	}
@@ -110,7 +112,7 @@ class FlightRepositoryTest {
 		LocalDateTime departure = LocalDateTime.of(2023, Month.JANUARY, 1, 16, 0);
 		LocalDateTime arrival = LocalDateTime.of(2023, Month.JANUARY, 1, 17, 0);
 
-		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival);
+		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival, this.aircraft.getId());
 
 		assertThat(optFlight.isPresent()).isTrue();
 	}
@@ -122,12 +124,78 @@ class FlightRepositoryTest {
 		LocalDateTime departure = LocalDateTime.of(2023, Month.JANUARY, 1, 14, 0);
 		LocalDateTime arrival = LocalDateTime.of(2023, Month.JANUARY, 1, 19, 0);
 
-		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival);
+		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival, this.aircraft.getId());
 
 		assertThat(optFlight.isPresent()).isTrue();
 	}
+	
+	@Test
+	@DisplayName("Return empty when departure time are between other flight's departure and arrival time and the aircraft is different")
+	void testFindByDateS2() {
+
+		LocalDateTime departure = LocalDateTime.of(2023, Month.JANUARY, 1, 16, 0);
+		LocalDateTime arrival = LocalDateTime.of(2023, Month.JANUARY, 1, 19, 0);
+
+		Aircraft aircraft2 = registerAircraft2();
+		
+		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival, aircraft2.getId());
+
+		assertThat(optFlight.isEmpty()).isTrue();
+	}
+
+	
+	@Test
+	@DisplayName("Return empty when arrival time are between other flight's departure and arrival time and the aircraft is different")
+	void testFindByDateS3() {
+
+		LocalDateTime departure = LocalDateTime.of(2023, Month.JANUARY, 1, 10, 0);
+		LocalDateTime arrival = LocalDateTime.of(2023, Month.JANUARY, 1, 16, 0);
+
+		Aircraft aircraft2 = registerAircraft2();
+		
+		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival, aircraft2.getId());
+
+		assertThat(optFlight.isEmpty()).isTrue();
+	}
+	
+	
+	@Test
+	@DisplayName("Return empty when departure and arrival time are between other flight's departure and arrival time and the aircraft is different")
+	void testFindByDateS4() {
+
+		LocalDateTime departure = LocalDateTime.of(2023, Month.JANUARY, 1, 16, 0);
+		LocalDateTime arrival = LocalDateTime.of(2023, Month.JANUARY, 1, 17, 0);
+
+		Aircraft aircraft2 = registerAircraft2();
+		
+		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival, aircraft2.getId());
+
+		assertThat(optFlight.isEmpty()).isTrue();
+	}
+	
+	
+	@Test
+	@DisplayName("Return empty when other flight's departure and arrival time are between departure and arrival time and arrival time and the aircraft is different")
+	void testFindByDateS5() {
+
+		LocalDateTime departure = LocalDateTime.of(2023, Month.JANUARY, 1, 14, 0);
+		LocalDateTime arrival = LocalDateTime.of(2023, Month.JANUARY, 1, 19, 0);
+
+		Aircraft aircraft2 = registerAircraft2();
+		
+		Optional<Flight> optFlight = flightRepo.findByDate(departure, arrival, aircraft2.getId());
+
+		assertThat(optFlight.isEmpty()).isTrue();
+	}
 
 
+	private Aircraft registerAircraft2()
+	{
+		Airline airline = registerAirline();
+		Aircraft aircraft2 = registerAircraft(airline);
+		
+		return aircraft2;
+	}
 
 	private Airline registerAirline()
 	{

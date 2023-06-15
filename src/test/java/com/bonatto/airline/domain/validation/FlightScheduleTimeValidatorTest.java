@@ -50,7 +50,7 @@ class FlightScheduleTimeValidatorTest {
 	void validFlightS1()
 	{
 		//given
-		when(flightRepo.findByDate(any(), any())).thenReturn(Optional.of(new Flight()));
+		when(flightRepo.findByDate(any(), any(), any())).thenReturn(Optional.of(new Flight()));
 
 		//when
 		
@@ -67,7 +67,7 @@ class FlightScheduleTimeValidatorTest {
 	void validFlightS2()
 	{
 		//given
-		when(flightRepo.findByDate(any(), any())).thenReturn(Optional.empty());
+		when(flightRepo.findByDate(any(), any(), any())).thenReturn(Optional.empty());
 
 		//when / then
 		Assertions.assertThatCode(() -> validator.validate(

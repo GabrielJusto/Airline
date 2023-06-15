@@ -16,12 +16,15 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 	@Query("""
 			SELECT f FROM Flight f
 			WHERE 
-			(f.departure >= :departure AND f.arrival <= :arrival)
-			OR 
-			(f.departure <= :departure AND f.arrival >= :departure)
-			OR
-			(f.departure <= :arrival AND f.arrival >= :arrival)
+			f.aircraft.id = :aircraftId AND
+			(
+				(f.departure >= :departure AND f.arrival <= :arrival)
+				OR 
+				(f.departure <= :departure AND f.arrival >= :departure)
+				OR
+				(f.departure <= :arrival AND f.arrival >= :arrival)
+			)
 			""")
-	public Optional<Flight> findByDate(LocalDateTime departure, LocalDateTime arrival);
+	public Optional<Flight> findByDate(LocalDateTime departure, LocalDateTime arrival, Long aircraftId);
 
 }

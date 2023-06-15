@@ -22,7 +22,7 @@ public class FlightScheduleTimeValidator implements FlightScheduleValidation {
 	
 	@Override
 	public void validate(FlightScheduleData data) {
-		Optional<Flight> opFlight = flightRepo.findByDate(data.departure(), data.arrival());
+		Optional<Flight> opFlight = flightRepo.findByDate(data.departure(), data.arrival(), data.aircfraftId());
 		if(opFlight.isPresent())
 			throw new RegisterException("This aricraft already has a flight at this time ");
 		
