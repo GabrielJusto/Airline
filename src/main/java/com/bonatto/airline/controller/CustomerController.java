@@ -64,7 +64,7 @@ public class CustomerController {
     }
 
     
-    @PutMapping("/update")
+    @PostMapping("/update")
     @Transactional
     public ResponseEntity<CustomerData> updateCustomer(@RequestBody @Valid CustomerUpdateData data)
     {

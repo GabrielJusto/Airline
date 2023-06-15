@@ -1,4 +1,4 @@
-package com.bonatto.airline.domain.airline.dto;
+package com.bonatto.airline.domain.aircraft.dto;
 
 public record AircraftUpdateData(
 

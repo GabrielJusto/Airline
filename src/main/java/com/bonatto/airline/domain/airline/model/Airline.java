@@ -3,6 +3,7 @@ package com.bonatto.airline.domain.airline.model;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.bonatto.airline.domain.aircraft.model.Aircraft;
 import com.bonatto.airline.domain.airline.dto.AirlineRegisterData;
 
 import jakarta.persistence.ElementCollection;

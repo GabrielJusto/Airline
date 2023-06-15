@@ -2,6 +2,7 @@ package com.bonatto.airline.domain.airline.model;
 
 import java.time.LocalDateTime;
 
+import com.bonatto.airline.domain.aircraft.model.Aircraft;
 import com.bonatto.airline.domain.airline.dto.FlightScheduleData;
 import com.bonatto.airline.domain.airport.model.Airport;
 

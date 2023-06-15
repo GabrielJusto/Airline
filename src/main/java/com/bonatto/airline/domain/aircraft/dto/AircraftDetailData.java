@@ -1,6 +1,6 @@
-package com.bonatto.airline.domain.airline.dto;
+package com.bonatto.airline.domain.aircraft.dto;
 
-import com.bonatto.airline.domain.airline.model.Aircraft;
+import com.bonatto.airline.domain.aircraft.model.Aircraft;
 
 public record AircraftDetailData(
 		Long id,

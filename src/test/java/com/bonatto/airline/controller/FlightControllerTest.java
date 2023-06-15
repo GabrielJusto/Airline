@@ -1,6 +1,6 @@
 package com.bonatto.airline.controller;
 
-import com.bonatto.airline.domain.airline.dto.AircraftDetailData;
+import com.bonatto.airline.domain.aircraft.dto.AircraftDetailData;
 import com.bonatto.airline.domain.airline.dto.FlightScheduleData;
 import com.bonatto.airline.domain.airline.dto.FlightScheduleDetailData;
 import com.bonatto.airline.domain.airline.service.FlightScheduleService;

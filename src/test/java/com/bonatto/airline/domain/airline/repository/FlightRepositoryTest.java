@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.Collections;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -17,9 +18,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.bonatto.airline.domain.airline.dto.AircraftRegisterData;
+import com.bonatto.airline.domain.aircraft.dto.AircraftRegisterData;
+import com.bonatto.airline.domain.aircraft.model.Aircraft;
 import com.bonatto.airline.domain.airline.dto.AirlineRegisterData;
-import com.bonatto.airline.domain.airline.model.Aircraft;
 import com.bonatto.airline.domain.airline.model.Airline;
 import com.bonatto.airline.domain.airline.model.Flight;
 import com.bonatto.airline.domain.airport.dto.AirportRegisterData;
@@ -268,7 +269,8 @@ class FlightRepositoryTest {
 				"A350",
 				300,
 				10000,
-				20000
+				20000,
+				Collections.emptyList()
 		);
 	}
 

@@ -1,5 +1,6 @@
 package com.bonatto.airline.domain.airline.dto;
 
+import com.bonatto.airline.domain.aircraft.dto.AircraftDetailData;
 import com.bonatto.airline.domain.airline.model.Flight;
 
 import java.time.LocalDateTime;

@@ -1,22 +1,32 @@
 package com.bonatto.airline.controller;
 
-import com.bonatto.airline.domain.airline.dto.AircraftDetailData;
-import com.bonatto.airline.domain.airline.dto.AircraftRegisterData;
-import com.bonatto.airline.domain.airline.dto.AircraftUpdateData;
-import com.bonatto.airline.domain.airline.model.Aircraft;
-import com.bonatto.airline.domain.airline.repository.AircraftRepository;
-import com.bonatto.airline.domain.airline.repository.AirlineRepository;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import jakarta.validation.Valid;
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
+import com.bonatto.airline.domain.aircraft.dto.AircraftDetailData;
+import com.bonatto.airline.domain.aircraft.dto.AircraftRegisterData;
+import com.bonatto.airline.domain.aircraft.dto.AircraftUpdateData;
+import com.bonatto.airline.domain.aircraft.model.Aircraft;
+import com.bonatto.airline.domain.aircraft.repository.AircraftRepository;
+import com.bonatto.airline.domain.aircraft.service.AircraftService;
+import com.bonatto.airline.domain.airline.repository.AirlineRepository;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/aircraft")
@@ -28,19 +38,23 @@ public class AircraftController {
 
     @Autowired
     private AirlineRepository airlineRepo;
+    
+    @Autowired
+    private AircraftService aircraftService;
+    
 
     @SuppressWarnings("rawtypes")
 	@PutMapping("/register")
     @Transactional
     public ResponseEntity registerAircraft(@Valid @RequestBody AircraftRegisterData data, UriComponentsBuilder uriBuilder)
     {
-        Aircraft aircraft = new Aircraft(data, airlineRepo);
-		aircraftRepo.save(aircraft);
+    	AircraftDetailData aircraftData = aircraftService.register(data);
 
-		URI uri = uriBuilder.path("/aircraft/{id}").buildAndExpand(aircraft.getId()).toUri();
-        return ResponseEntity.created(uri).body(new AircraftDetailData(aircraft));
+		URI uri = uriBuilder.path("/aircraft/{id}").buildAndExpand(aircraftData.id()).toUri();
+        return ResponseEntity.created(uri).body(aircraftData);
     }
     
+
     @SuppressWarnings("rawtypes")
     @GetMapping("/{id}")
     public ResponseEntity detail( @PathVariable Long id)

@@ -1,7 +1,9 @@
-package com.bonatto.airline.domain.airline.model;
+package com.bonatto.airline.domain.aircraft.model;
 
-import com.bonatto.airline.domain.airline.dto.AircraftRegisterData;
-import com.bonatto.airline.domain.airline.dto.AircraftUpdateData;
+import com.bonatto.airline.domain.aircraft.dto.AircraftRegisterData;
+import com.bonatto.airline.domain.aircraft.dto.AircraftUpdateData;
+import com.bonatto.airline.domain.airline.model.Airline;
+import com.bonatto.airline.domain.airline.model.Flight;
 import com.bonatto.airline.domain.airline.repository.AirlineRepository;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,26 +37,11 @@ public class Aircraft {
     
     @OneToMany(mappedBy = "aircraft")
     private List<Flight> flights;
+    
+    @OneToMany(mappedBy= "aircraft")
+    private List<Seat> seats;
 
 
-
-    public Aircraft(AircraftRegisterData data, AirlineRepository airlineRepo)
-    {
-        Optional<Airline> airlineOp = airlineRepo.findById(data.airlineId());
-
-        if(airlineOp.isEmpty())
-            return;
-
-        Airline airline = airlineOp.get();
-
-        this.airline = airline;
-        this.model = data.model();
-        this.passengerCapacity = data.passengerCapacity();
-        this.takeoffWeight = data.takeoffWeight();
-        this.aircraftRange = data.aircraftRange();
-        
-        this.flights = new ArrayList<>();
-    }
 
     public Aircraft(AircraftRegisterData data, Airline airline) {
         this.airline = airline;

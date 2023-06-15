@@ -24,12 +24,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.bonatto.airline.domain.aircraft.model.Aircraft;
+import com.bonatto.airline.domain.aircraft.repository.AircraftRepository;
 import com.bonatto.airline.domain.airline.dto.FlightScheduleData;
 import com.bonatto.airline.domain.airline.dto.FlightScheduleDetailData;
-import com.bonatto.airline.domain.airline.model.Aircraft;
 import com.bonatto.airline.domain.airline.model.Airline;
 import com.bonatto.airline.domain.airline.model.Flight;
-import com.bonatto.airline.domain.airline.repository.AircraftRepository;
 import com.bonatto.airline.domain.airline.repository.FlightRepository;
 import com.bonatto.airline.domain.airport.repository.AirportRepository;
 import com.bonatto.airline.domain.validation.FlightScheduleValidation;
@@ -104,7 +104,7 @@ class FlightScheduleServiceTest {
 		 LocalDateTime arrival = LocalDateTime.of(2023, Month.JANUARY, 1, 14, 0, 0);
 		 Aircraft aircraft = new Aircraft(1l, 
 				 new Airline(1l, true, "Test Airline", Collections.emptyList(), Collections.emptyList()),
-				 "A350", 300, 10000, 20000, Collections.emptyList());
+				 "A350", 300, 10000, 20000, Collections.emptyList(), Collections.emptyList());
 		 
 		 when(aircraftRepo.existsById(1l)).thenReturn(true);
 		 when(aircraftRepo.getReferenceById(any())).thenReturn(aircraft);
