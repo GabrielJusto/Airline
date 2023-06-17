@@ -51,11 +51,6 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder ()
     {
-    	String idForEncode = "bcrypt";
-    	Map<String, PasswordEncoder> encoders = new HashMap<>();
-    	encoders.put(idForEncode, new BCryptPasswordEncoder(10));
-    	encoders.put("argon2", Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8());
-    	
-        return new DelegatingPasswordEncoder(idForEncode, encoders);
+        return new BCryptPasswordEncoder();
     }
 }
