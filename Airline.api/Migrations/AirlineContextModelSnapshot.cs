@@ -45,7 +45,7 @@ namespace Airline.Migrations
 
                     b.HasKey("AircraftID");
 
-                    b.ToTable("Aircrafts");
+                    b.ToTable("Aircrafts", (string)null);
                 });
 
             modelBuilder.Entity("Airline.Models.AirlineUser", b =>
@@ -78,7 +78,7 @@ namespace Airline.Migrations
 
                     b.HasKey("AirlineUserId");
 
-                    b.ToTable("AirlineUsers");
+                    b.ToTable("AirlineUsers", (string)null);
                 });
 
             modelBuilder.Entity("Airline.Models.Flight", b =>
@@ -107,7 +107,7 @@ namespace Airline.Migrations
 
                     b.HasIndex("RouteID");
 
-                    b.ToTable("Flights");
+                    b.ToTable("Flights", (string)null);
                 });
 
             modelBuilder.Entity("Airline.Models.Route", b =>
@@ -131,7 +131,7 @@ namespace Airline.Migrations
 
                     b.HasKey("RouteID");
 
-                    b.ToTable("Routes");
+                    b.ToTable("Routes", (string)null);
                 });
 
             modelBuilder.Entity("Airline.Models.Seat", b =>
@@ -165,7 +165,7 @@ namespace Airline.Migrations
 
                     b.HasIndex("FlightId");
 
-                    b.ToTable("Seats");
+                    b.ToTable("Seats", (string)null);
                 });
 
             modelBuilder.Entity("Airline.Models.SeatClass", b =>
@@ -179,7 +179,7 @@ namespace Airline.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SeatClasses");
+                    b.ToTable("SeatClasses", (string)null);
 
                     b.HasData(
                         new
@@ -223,7 +223,7 @@ namespace Airline.Migrations
 
                     b.HasIndex("SeatId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Tickets", (string)null);
                 });
 
             modelBuilder.Entity("Airline.Models.Flight", b =>
