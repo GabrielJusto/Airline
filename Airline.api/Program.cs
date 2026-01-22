@@ -4,11 +4,13 @@ using System.Text.Json.Serialization;
 
 using Airline.Configuration;
 using Airline.Database;
+using Airline.Models;
 using Airline.Repositories.Implementations;
 using Airline.Repositories.Interfaces;
 using Airline.Services.Implementations;
 using Airline.Services.Interfaces;
 
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,19 @@ builder.Services.AddDbContext<AirlineContext>(options =>
 
 
 builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+builder.Services.AddIdentity<AirlineUser, IdentityRole<int>>()
+    .AddEntityFrameworkStores<AirlineContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequiredLength = 8;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireDigit = true;
+});
 
 
 builder.Services.AddScoped<IAircraftRepository, AircraftRepository>();
@@ -46,6 +61,7 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

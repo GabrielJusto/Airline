@@ -1,12 +1,14 @@
 ﻿using Airline.Models;
 
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 using Route = Airline.Models.Route;
 
 namespace Airline.Database;
 
-public class AirlineContext(DbContextOptions<AirlineContext> options) : DbContext(options)
+public class AirlineContext(DbContextOptions<AirlineContext> options) : IdentityDbContext<AirlineUser, IdentityRole<int>, int>(options)
 {
 
     public DbSet<Aircraft> Aircrafts { get; set; }
