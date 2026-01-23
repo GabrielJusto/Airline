@@ -52,6 +52,7 @@ builder.Services.AddScoped<SeatListService>();
 builder.Services.AddScoped<TicketPurchaseService>();
 builder.Services.AddScoped<TicketRepository>();
 builder.Services.AddScoped<AirlineUserRepository>();
+builder.Services.AddScoped<AuthService>();
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.Configure<JwtConfiguration>(builder.Configuration.GetSection("Jwt"));
