@@ -16,7 +16,7 @@ namespace Airline.Controllers;
 public class AuthenticationController(
     AuthService authService) : ControllerBase
 {
- 
+
     private readonly AuthService _authService = authService;
 
     [HttpPost("register")]
@@ -28,7 +28,8 @@ public class AuthenticationController(
             IdentityResult result = await _authService.RegisterUser(registerData);
             return this.Ok(result);
 
-        }catch(ValidationException e)
+        }
+        catch(ValidationException e)
         {
             return this.BadRequest(e.Message);
         }

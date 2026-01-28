@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
+using Airline.Exceptions;
+
 namespace Airline.Validators;
 
 public class ValidatorService(IValidation[] validations)
@@ -22,6 +24,14 @@ public class ValidatorService(IValidation[] validations)
         }
     }
 
+    public void ValidateAndThrow()
+    {
+        Validate();
+        if(HasErrors())
+        {
+            throw new ValidationServiceException(GetErrors());
+        }
+    }
 
     public bool HasErrors()
     {

@@ -53,6 +53,8 @@ builder.Services.AddScoped<TicketPurchaseService>();
 builder.Services.AddScoped<TicketRepository>();
 builder.Services.AddScoped<AirlineUserRepository>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<IAirportRepository, AirportRepository>();
+builder.Services.AddScoped<AirportService>();
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.Configure<JwtConfiguration>(builder.Configuration.GetSection("Jwt"));

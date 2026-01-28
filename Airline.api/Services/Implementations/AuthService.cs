@@ -22,10 +22,10 @@ public class AuthService(
     {
 
         AirlineUser? userExists = await _userManager.FindByEmailAsync(registerData.Email);
-        if (userExists != null)
+        if(userExists != null)
             throw new ValidationException("Email already registered!");
 
-        AirlineUser user = new ()
+        AirlineUser user = new()
         {
             Email = registerData.Email,
             UserName = registerData.Email,
@@ -36,7 +36,7 @@ public class AuthService(
 
         IdentityResult result = await _userManager.CreateAsync(user, registerData.Password);
 
-        if (!result.Succeeded)
+        if(!result.Succeeded)
             throw new ValidationException(string.Join(", ", result.Errors.Select(e => e.Description)));
 
         return result;

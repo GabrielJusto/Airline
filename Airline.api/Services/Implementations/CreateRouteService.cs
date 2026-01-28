@@ -22,7 +22,7 @@ public class CreateRouteService(
     // {
     //   this.Validate(data);
     // RouteMergeDTO mergeData = new(data);
-    
+
     // Route route = new(mergeData);
 
     //     return await _routeRepository.InsertAsync(route);
