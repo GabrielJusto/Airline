@@ -2,7 +2,7 @@
 using Airline.DTO;
 using Airline.DTO.AirportDTOs;
 using Airline.Exceptions;
-using Airline.Services.Implementations;
+using Airline.Services.Interfaces;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +11,10 @@ namespace Airline.Controllers;
 
 [ApiController]
 [Route("airport")]
-public class AirportController(AirportService airportService) : ControllerBase
+public class AirportController(IAirportService airportService) : ControllerBase
 {
 
-    private readonly AirportService _airportService = airportService;
+    private readonly IAirportService _airportService = airportService;
 
 
     [HttpPost("create")]

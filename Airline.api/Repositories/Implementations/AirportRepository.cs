@@ -36,4 +36,9 @@ public class AirportRepository(AirlineContext context) : IAirportRepository
         return await query.ToListAsync();
     }
 
+    public async Task<Airport?> GetAirportById(int airportId)
+    {
+        return await _context.Airports.FirstOrDefaultAsync(a => a.AirportId == airportId);
+    }
+
 }

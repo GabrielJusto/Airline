@@ -1,8 +1,8 @@
 ﻿namespace Airline.RequestBodies;
 
 public record RouteInsertRequestBody(
-    string From,
-    string To,
+    int FromAirportId,
+    int ToAirportId,
     double Distance
 );
 

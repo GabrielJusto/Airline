@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using Airline.DTO;
+using Airline.RequestBodies;
 
 namespace Airline.Models;
 
@@ -19,7 +20,7 @@ public class Route
     public required virtual Airport ToAirport { get; set; }
     public Route() { }
 
-    public Route(RouteMergeDTO data)
+    public Route(RouteInsertRequestBody data)
     {
         Distance = data.Distance;
     }

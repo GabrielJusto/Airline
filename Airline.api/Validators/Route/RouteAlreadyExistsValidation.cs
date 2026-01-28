@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 using Airline.DTO;
 using Airline.Repositories.Interfaces;
@@ -19,15 +20,13 @@ public class RouteAlreadyExistsValidation(
     {
         RouteListFiltersDTO filters = new()
         {
-            From = _data.From,
-            To = _data.To
+            FromAirportId = _data.FromAirportId,
+            ToAirportId = _data.ToAirportId
         };
 
-        RouteListDTO? route = _routeRepository.ListAsync(filters)
-            .Result
-            .FirstOrDefault();
+        List<RouteListDTO> routes = _routeRepository.List(filters);
 
-        if(route is not null)
+        if(routes.Count != 0)
         {
             throw new ValidationException("Route already exists.");
         }

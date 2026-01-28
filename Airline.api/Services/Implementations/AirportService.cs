@@ -3,12 +3,13 @@
 using Airline.DTO.AirportDTOs;
 using Airline.Models;
 using Airline.Repositories.Interfaces;
+using Airline.Services.Interfaces;
 using Airline.Validators;
 using Airline.Validators.Airport;
 
 namespace Airline.Services.Implementations;
 
-public class AirportService(IAirportRepository airportRepository)
+public class AirportService(IAirportRepository airportRepository) : IAirportService
 {
     private readonly IAirportRepository _airportRepository = airportRepository;
 
@@ -26,5 +27,10 @@ public class AirportService(IAirportRepository airportRepository)
     {
         List<Airport> airports = await _airportRepository.ListAirportsAsync(filters);
         return airports.Select(a => new AirportListDetailDTO(a)).ToList();
+    }
+
+    public async Task<Airport?> GetAirportByIdAsync(int airportId)
+    {
+        return await _airportRepository.GetAirportById(airportId);
     }
 }

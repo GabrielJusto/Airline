@@ -42,7 +42,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 builder.Services.AddScoped<IAircraftRepository, AircraftRepository>();
 builder.Services.AddScoped<IRouteRepository, RouteRepository>();
-builder.Services.AddScoped<ICreateRouteService, CreateRouteService>();
+builder.Services.AddScoped<IRouteService, RouteService>();
 builder.Services.AddScoped<IFlightRepository, FlightRepository>();
 builder.Services.AddScoped<IFlightCreateService, FlightCreateService>();
 builder.Services.AddScoped<IFlightDetailService, FlightDetailService>();
@@ -54,7 +54,7 @@ builder.Services.AddScoped<TicketRepository>();
 builder.Services.AddScoped<AirlineUserRepository>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<IAirportRepository, AirportRepository>();
-builder.Services.AddScoped<AirportService>();
+builder.Services.AddScoped<IAirportService, AirportService>();
 
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.Configure<JwtConfiguration>(builder.Configuration.GetSection("Jwt"));

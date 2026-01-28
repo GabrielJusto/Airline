@@ -21,12 +21,12 @@ public class RouteController(IRouteRepository routeRepository) : ControllerBase
     [HttpPost("create")]
     public async Task<IResult> Create(
         [FromBody] RouteInsertRequestBody createData,
-        [FromServices] ICreateRouteService createRouteService
+        [FromServices] IRouteService createRouteService
     )
     {
         try
         {
-            // int routeId = await createRouteService.CreateAsync(createData);
+            int routeId = await createRouteService.CreateAsync(createData);
             return Results.Created();
         }
         catch(ValidationException ex)

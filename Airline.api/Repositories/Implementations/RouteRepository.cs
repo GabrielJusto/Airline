@@ -20,14 +20,44 @@ public class RouteRepository(AirlineContext context) : IRouteRepository
         return route.RouteID;
     }
 
-    public async Task<IEnumerable<RouteListDTO>> ListAsync(RouteListFiltersDTO filters)
+    public async Task<List<RouteListDTO>> ListAsync(RouteListFiltersDTO filters)
     {
         IQueryable<Route> query = _context.Routes.AsQueryable();
+
+        if(filters.FromAirportId != null)
+        {
+            query = query.Where(r => r.FromAirportId == filters.FromAirportId);
+        }
+        if(filters.ToAirportId != null)
+        {
+            query = query.Where(r => r.ToAirportId == filters.ToAirportId);
+        }
 
         List<RouteListDTO> routes = await query
             .Select(r => new RouteListDTO(
                 r.RouteID
             )).ToListAsync();
+
+        return routes;
+    }
+
+    public List<RouteListDTO> List(RouteListFiltersDTO filters)
+    {
+        IQueryable<Route> query = _context.Routes.AsQueryable();
+
+        if(filters.FromAirportId != null)
+        {
+            query = query.Where(r => r.FromAirportId == filters.FromAirportId);
+        }
+        if(filters.ToAirportId != null)
+        {
+            query = query.Where(r => r.ToAirportId == filters.ToAirportId);
+        }
+
+        List<RouteListDTO> routes = query
+            .Select(r => new RouteListDTO(
+                r.RouteID
+            )).ToList();
 
         return routes;
     }
