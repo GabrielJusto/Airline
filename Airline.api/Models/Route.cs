@@ -11,15 +11,16 @@ public class Route
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int RouteID { get; set; }
-    public string From { get; set; } = string.Empty;
-    public string To { get; set; } = string.Empty;
+
+    public int FromAirportId { get; set; }
+    public int ToAirportId { get; set; }
     public double Distance { get; set; }
+    public required virtual Airport FromAirport { get; set; }
+    public required virtual Airport ToAirport { get; set; }
     public Route() { }
 
     public Route(RouteMergeDTO data)
     {
-        From = data.From;
-        To = data.To;
         Distance = data.Distance;
     }
 

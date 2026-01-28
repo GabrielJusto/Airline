@@ -26,7 +26,7 @@ public class RouteController(IRouteRepository routeRepository) : ControllerBase
     {
         try
         {
-            int routeId = await createRouteService.CreateAsync(createData);
+            // int routeId = await createRouteService.CreateAsync(createData);
             return Results.Created();
         }
         catch(ValidationException ex)

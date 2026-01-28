@@ -31,9 +31,7 @@ public class FlightRepository(AirlineContext context) : IFlightRepository
 
         IQueryable<Flight> query = _context.Flights
             .Include(f => f.Aircraft)
-            .Include(f => f.Route)
-            .Where(f => f.Route.From == filter.From)
-            .Where(f => f.Route.To == filter.To);
+            .Include(f => f.Route);
 
 
         if(filter.StartDepartureDate.HasValue)

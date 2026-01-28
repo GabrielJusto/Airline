@@ -22,23 +22,11 @@ public class RouteRepository(AirlineContext context) : IRouteRepository
 
     public async Task<IEnumerable<RouteListDTO>> ListAsync(RouteListFiltersDTO filters)
     {
-        var query = _context.Routes.AsQueryable();
-
-        if(!string.IsNullOrEmpty(filters.From))
-        {
-            query = query.Where(r => r.From == filters.From);
-        }
-
-        if(!string.IsNullOrEmpty(filters.To))
-        {
-            query = query.Where(r => r.To == filters.To);
-        }
+        IQueryable<Route> query = _context.Routes.AsQueryable();
 
         List<RouteListDTO> routes = await query
             .Select(r => new RouteListDTO(
-                r.RouteID,
-                r.From,
-                r.To
+                r.RouteID
             )).ToListAsync();
 
         return routes;

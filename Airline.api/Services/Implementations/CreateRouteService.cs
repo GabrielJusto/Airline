@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using Airline.DTO;
+using Airline.Models;
 using Airline.Repositories.Interfaces;
 using Airline.RequestBodies;
 using Airline.Services.Interfaces;
@@ -17,14 +18,15 @@ public class CreateRouteService(
 {
     private readonly IRouteRepository _routeRepository = routeRepository;
 
-    public async Task<int> CreateAsync(RouteInsertRequestBody data)
-    {
-        this.Validate(data);
-        RouteMergeDTO mergeData = new(data);
-        Route route = new(mergeData);
+    // public async Task<int> CreateAsync(RouteInsertRequestBody data)
+    // {
+    //   this.Validate(data);
+    // RouteMergeDTO mergeData = new(data);
+    
+    // Route route = new(mergeData);
 
-        return await _routeRepository.InsertAsync(route);
-    }
+    //     return await _routeRepository.InsertAsync(route);
+    // }
 
     private void Validate(RouteInsertRequestBody data)
     {
