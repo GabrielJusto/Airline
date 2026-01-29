@@ -21,9 +21,32 @@ public class SeatRepository(AirlineContext context) : ISeatRepository
     {
         IQueryable<Seat> query = _context.Seats.AsQueryable();
 
-        query = query
-        .Where(s => s.Flight.FlightId == filter.FlightId);
+        if(filter.FlightId.HasValue)
+        {
+            query = query.Where(s => s.Flight.FlightId == filter.FlightId);
+        }
+        if(filter.RouteId.HasValue)
+        {
+            query = query.Where(s => s.Flight.RouteId == filter.RouteId);
+        }
 
+
+
+        return await Task.FromResult(query.ToList());
+    }
+
+    public async Task<IEnumerable<Seat>> ListForTicketAsync(SeatListFilterDTO filter)
+    {
+        IQueryable<Seat> query = _context.Seats.AsQueryable();
+
+        if(filter.FlightId.HasValue)
+        {
+            query = query.Where(s => s.Flight.FlightId == filter.FlightId);
+        }
+        if(filter.RouteId.HasValue)
+        {
+            query = query.Where(s => s.Flight.RouteId == filter.RouteId);
+        }
 
         return await Task.FromResult(query.ToList());
     }
