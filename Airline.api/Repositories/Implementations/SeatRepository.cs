@@ -19,7 +19,14 @@ public class SeatRepository(AirlineContext context) : ISeatRepository
 
     public async Task<IEnumerable<Seat>> ListAsync(SeatListFilterDTO filter)
     {
-        IQueryable<Seat> query = _context.Seats.AsQueryable();
+        IQueryable<Seat> query = _context.Seats
+            .Include(s => s.Flight)
+            .ThenInclude(f => f.Route)
+            .ThenInclude(r => r.FromAirport)
+            .Include(s => s.Flight)
+            .ThenInclude(f => f.Route)
+            .ThenInclude(r => r.ToAirport)
+            .AsQueryable();
 
         if(filter.FlightId.HasValue)
         {
