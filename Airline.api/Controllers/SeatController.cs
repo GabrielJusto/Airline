@@ -40,7 +40,7 @@ public class SeatController(
     }
 
     [HttpGet("list-available-for-ticket")]
-    public async Task<IResult> ListAvailableForTicket([FromBody] SeatListFilterDTO filters)
+    public async Task<IResult> ListAvailableForTicket([FromQuery] SeatListFilterDTO filters)
     {
         List<SeatTicketListDTO> seats = await _seatListService.ListAvailableSeatsForTicket(filters);
         return Results.Ok(seats);

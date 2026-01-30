@@ -15,6 +15,18 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy => policy
+            .WithOrigins("http://localhost:8081")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+
+    );
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -68,5 +80,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseCors("AllowFrontend");
 
 app.Run();

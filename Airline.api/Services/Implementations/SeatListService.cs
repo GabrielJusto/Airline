@@ -22,7 +22,7 @@ public class SeatListService(ISeatRepository seatRepository)
         List<SeatTicketListDTO> tickets = seats
             .Where(s => s.IsAvailable)
             .Select(s => new SeatTicketListDTO(s))
-            .GroupBy(s => s.SeatClass)
+            .GroupBy(s => new { s.Price, s.FlightNumber })
             .Select(g => g.First())
             .ToList();
 
