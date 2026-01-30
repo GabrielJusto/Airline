@@ -299,7 +299,7 @@ public class SeatListServiceTests
     }
 
     [Fact]
-    public async Task ListAvailableSeatsForTicket_ShouldReturnOneSeatPerClass_WhenMultipleSameClassAvailable()
+    public async Task ListAvailableSeatsForTicket_ShouldReturnOneSeatPerPrice_WhenMultipleSameClassAvailable()
     {
         // Arrange
         SeatListFilterDTO filters = new()
@@ -397,15 +397,10 @@ public class SeatListServiceTests
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(3, result.Count); // One Economic, one Executive, one FirstClass
+        Assert.Equal(5, result.Count);
 
-        List<SeatTicketListDTO> economicSeats = result.Where(s => s.SeatClass == SeatClassEnum.Economic.ToString()).ToList();
-        List<SeatTicketListDTO> executiveSeats = result.Where(s => s.SeatClass == SeatClassEnum.Executive.ToString()).ToList();
-        List<SeatTicketListDTO> firstClassSeats = result.Where(s => s.SeatClass == SeatClassEnum.FirstClass.ToString()).ToList();
-
-        Assert.Single(economicSeats);
-        Assert.Single(executiveSeats);
-        Assert.Single(firstClassSeats);
+        List<decimal> prices = result.Select(s => s.Price).ToList();
+        Assert.Equal(prices.Count, prices.Distinct().Count());
     }
 
     [Fact]

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using Airline.DTO;
 using Airline.DTO.AirportDTOs;
 using Airline.Exceptions;
 using Airline.Models;

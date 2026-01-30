@@ -36,8 +36,13 @@ public class SeatRepository(AirlineContext context) : ISeatRepository
         {
             query = query.Where(s => s.Flight.RouteId == filter.RouteId);
         }
-
-
+        if(filter.DepartureDate.HasValue)
+        {
+            DateOnly d = filter.DepartureDate.Value;
+            DateTimeOffset start = new(d.ToDateTime(TimeOnly.MinValue), TimeSpan.Zero);
+            DateTimeOffset end = start.AddDays(1);
+            query = query.Where(s => s.Flight.Departure >= start && s.Flight.Departure < end);
+        }
 
         return await Task.FromResult(query.ToList());
     }
