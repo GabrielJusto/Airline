@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,103 +28,6 @@ public class SeatListServiceTests
         _service = new SeatListService(_seatRepositoryMock.Object);
     }
 
-    #region ListAsync Tests
-
-    [Fact]
-    public async Task ListAsync_ShouldReturnEmptyList_WhenNoSeatsFound()
-    {
-        // Arrange
-        SeatListFilterDTO filters = new()
-        {
-            FlightId = 1
-        };
-
-        _seatRepositoryMock
-            .Setup(r => r.ListAsync(filters))
-            .ReturnsAsync(new List<Seat>());
-
-        // Act
-        var result = await _service.ListAsync(filters);
-
-        // Assert
-        Assert.NotNull(result);
-        Assert.Empty(result);
-        _seatRepositoryMock.Verify(r => r.ListAsync(filters), Times.Once);
-    }
-
-    [Fact]
-    public async Task ListAsync_ShouldReturnSeatListDTOs_WhenSeatsFound()
-    {
-        // Arrange
-        SeatListFilterDTO filters = new()
-        {
-            FlightId = 1
-        };
-
-        Aircraft aircraft = new()
-        {
-            AircraftID = 1,
-            Model = "Boeing 737",
-            Capacity = 180,
-            AverageFuelConsumption = 2.5
-        };
-
-        Flight flight = new()
-        {
-            FlightId = 1,
-            Departure = DateTime.UtcNow.AddHours(2),
-            Arrival = DateTime.UtcNow.AddHours(4),
-            Aircraft = aircraft,
-            Route = new Route
-            {
-                FromAirport = new Airport { IATACode = "GRU", City = "São Paulo", Country = "Brazil", Name = "Guarulhos" },
-                ToAirport = new Airport { IATACode = "GIG", City = "Rio de Janeiro", Country = "Brazil", Name = "Galeão" },
-                Distance = 400
-            }
-        };
-
-        List<Seat> seats = new()
-        {
-            new()
-            {
-                SeatId = 1,
-                SeatNumber = 1,
-                Row = "A",
-                IsAvailable = true,
-                Price = 150.00m,
-                SeatClass = SeatClassEnum.Economic,
-                FlightId = 1,
-                Flight = flight
-            },
-            new()
-            {
-                SeatId = 2,
-                SeatNumber = 2,
-                Row = "A",
-                IsAvailable = true,
-                Price = 250.00m,
-                SeatClass = SeatClassEnum.Executive,
-                FlightId = 1,
-                Flight = flight
-            }
-        };
-
-        _seatRepositoryMock
-            .Setup(r => r.ListAsync(filters))
-            .ReturnsAsync(seats);
-
-        // Act
-        var result = await _service.ListAsync(filters);
-
-        // Assert
-        Assert.NotNull(result);
-        Assert.Equal(2, result.Count);
-        Assert.All(result, item => Assert.IsType<SeatListDTO>(item));
-        _seatRepositoryMock.Verify(r => r.ListAsync(filters), Times.Once);
-    }
-
-    #endregion
-
     #region ListAvailableSeatsForTicket Tests
 
     [Fact]
@@ -132,7 +36,9 @@ public class SeatListServiceTests
         // Arrange
         SeatListFilterDTO filters = new()
         {
-            FlightId = 1
+            FlightId = 1,
+            FromIATACode = "GRU",
+            ToIATACode = "GIG"
         };
 
         _seatRepositoryMock
@@ -154,7 +60,9 @@ public class SeatListServiceTests
         // Arrange
         SeatListFilterDTO filters = new()
         {
-            FlightId = 1
+            FlightId = 1,
+            FromIATACode = "GRU",
+            ToIATACode = "GIG"
         };
 
         Aircraft aircraft = new()
@@ -223,7 +131,9 @@ public class SeatListServiceTests
         // Arrange
         SeatListFilterDTO filters = new()
         {
-            FlightId = 1
+            FlightId = 1,
+            FromIATACode = "GRU",
+            ToIATACode = "GIG"
         };
 
         Aircraft aircraft = new()
@@ -304,7 +214,9 @@ public class SeatListServiceTests
         // Arrange
         SeatListFilterDTO filters = new()
         {
-            FlightId = 1
+            FlightId = 1,
+            FromIATACode = "GRU",
+            ToIATACode = "GIG"
         };
 
         Aircraft aircraft = new()
@@ -409,7 +321,9 @@ public class SeatListServiceTests
         // Arrange
         SeatListFilterDTO filters = new()
         {
-            FlightId = 1
+            FlightId = 1,
+            FromIATACode = "GRU",
+            ToIATACode = "GIG"
         };
 
         Aircraft aircraft = new()
@@ -463,6 +377,34 @@ public class SeatListServiceTests
         Assert.Equal("Rio de Janeiro", dto.ToCity);
         Assert.Equal(150.00m, dto.Price);
         Assert.Equal(SeatClassEnum.Economic.ToString(), dto.SeatClass);
+    }
+
+    [Fact]
+    public async Task ListAvailableSeatsForTicket_ThrowsValidationException_WhenFromIataIsNull()
+    {
+        // Arrange
+        SeatListFilterDTO filters = new()
+        {
+            FromIATACode = null,
+            ToIATACode = "GIG"
+        };
+
+        // Act & Assert
+        await Assert.ThrowsAsync<ValidationException>(() => _service.ListAvailableSeatsForTicket(filters));
+    }
+
+    [Fact]
+    public async Task ListAvailableSeatsForTicket_ThrowsValidationException_WhenToIataIsNull()
+    {
+        // Arrange
+        SeatListFilterDTO filters = new()
+        {
+            FromIATACode = "GRU",
+            ToIATACode = null
+        };
+
+        // Act & Assert
+        await Assert.ThrowsAsync<ValidationException>(() => _service.ListAvailableSeatsForTicket(filters));
     }
 
     #endregion

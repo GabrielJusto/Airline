@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 using Airline.DTO;
 using Airline.DTO.SeatDTOs;
 using Airline.Exceptions;
@@ -32,17 +34,18 @@ public class SeatController(
         }
     }
 
-    [HttpGet("list")]
-    public async Task<IResult> List([FromQuery] SeatListFilterDTO listData)
-    {
-        var seats = await _seatListService.ListAsync(listData);
-        return Results.Ok(seats);
-    }
-
     [HttpGet("list-available-for-ticket")]
     public async Task<IResult> ListAvailableForTicket([FromQuery] SeatListFilterDTO filters)
     {
-        List<SeatTicketListDTO> seats = await _seatListService.ListAvailableSeatsForTicket(filters);
-        return Results.Ok(seats);
+        try
+        {
+            List<SeatTicketListDTO> seats = await _seatListService.ListAvailableSeatsForTicket(filters);
+            return Results.Ok(seats);
+        }
+        catch(ValidationException e)
+        {
+            return Results.BadRequest(e.Message);
+        }
+
     }
 }

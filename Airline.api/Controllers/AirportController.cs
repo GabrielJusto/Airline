@@ -1,10 +1,8 @@
 
-using Airline.DTO;
 using Airline.DTO.AirportDTOs;
 using Airline.Exceptions;
 using Airline.Services.Interfaces;
 
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airline.Controllers;
