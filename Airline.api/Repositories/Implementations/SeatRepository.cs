@@ -19,22 +19,19 @@ public class SeatRepository(AirlineContext context) : ISeatRepository
 
     public async Task<IEnumerable<Seat>> ListAsync(SeatListFilterDTO filter)
     {
-        IQueryable<Seat> query = _context.Seats
-            .Include(s => s.Flight)
-            .ThenInclude(f => f.Route)
-            .ThenInclude(r => r.FromAirport)
-            .Include(s => s.Flight)
-            .ThenInclude(f => f.Route)
-            .ThenInclude(r => r.ToAirport)
-            .AsQueryable();
+        IQueryable<Seat> query = _context.Seats.AsQueryable();
 
+        if(!string.IsNullOrWhiteSpace(filter.FromIATACode))
+        {
+            query = query.Where(s => s.Flight.Route.FromAirport.IATACode == filter.FromIATACode);
+        }
+        if(!string.IsNullOrWhiteSpace(filter.ToIATACode))
+        {
+            query = query.Where(s => s.Flight.Route.ToAirport.IATACode == filter.ToIATACode);
+        }
         if(filter.FlightId.HasValue)
         {
             query = query.Where(s => s.Flight.FlightId == filter.FlightId);
-        }
-        if(filter.RouteId.HasValue)
-        {
-            query = query.Where(s => s.Flight.RouteId == filter.RouteId);
         }
         if(filter.DepartureDate.HasValue)
         {
@@ -43,23 +40,16 @@ public class SeatRepository(AirlineContext context) : ISeatRepository
             query = query.Where(s => s.Flight.Departure >= start && s.Flight.Departure < end);
         }
 
-        return await Task.FromResult(query.ToList());
-    }
+        return await query
+            .Include(s => s.Flight)
+                .ThenInclude(f => f.Route)
+                    .ThenInclude(r => r.FromAirport)
+            .Include(s => s.Flight)
+                .ThenInclude(f => f.Route)
+                    .ThenInclude(r => r.ToAirport)
+            .AsNoTracking()
+            .ToListAsync();
 
-    public async Task<IEnumerable<Seat>> ListForTicketAsync(SeatListFilterDTO filter)
-    {
-        IQueryable<Seat> query = _context.Seats.AsQueryable();
-
-        if(filter.FlightId.HasValue)
-        {
-            query = query.Where(s => s.Flight.FlightId == filter.FlightId);
-        }
-        if(filter.RouteId.HasValue)
-        {
-            query = query.Where(s => s.Flight.RouteId == filter.RouteId);
-        }
-
-        return await Task.FromResult(query.ToList());
     }
 
     public async Task<Seat?> GetSeatByIdAsync(int seatId)

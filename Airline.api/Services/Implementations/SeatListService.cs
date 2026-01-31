@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 using Airline.DTO;
 using Airline.DTO.SeatDTOs;
 using Airline.Models;
@@ -9,14 +11,13 @@ public class SeatListService(ISeatRepository seatRepository)
 {
     private readonly ISeatRepository _seatRepository = seatRepository;
 
-    public async Task<List<SeatListDTO>> ListAsync(SeatListFilterDTO filters)
-    {
-        IEnumerable<Seat> seats = await _seatRepository.ListAsync(filters);
-        return seats.Select(s => new SeatListDTO(s)).ToList();
-    }
-
     public async Task<List<SeatTicketListDTO>> ListAvailableSeatsForTicket(SeatListFilterDTO filters)
     {
+        if(filters.FromIATACode == null || filters.ToIATACode == null)
+        {
+            throw new ValidationException("fomIATACode and toIATACode can not be null");
+        }
+
         IEnumerable<Seat> seats = await _seatRepository.ListAsync(filters);
 
         List<SeatTicketListDTO> tickets = seats
