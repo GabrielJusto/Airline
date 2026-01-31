@@ -79,7 +79,7 @@ public class SeatRepositoryTests
         await ctx.SaveChangesAsync();
 
         SeatRepository repo = new(ctx);
-        SeatListFilterDTO filters = new() { DepartureDate = new DateOnly(2026, 2, 15) };
+        SeatListFilterDTO filters = new() { DepartureDate = new DateTimeOffset(2026, 2, 15, 0, 0, 0, TimeSpan.FromHours(-3)) };
 
         // Act
         System.Collections.Generic.List<Seat> result = (await repo.ListAsync(filters)).ToList();
@@ -88,7 +88,7 @@ public class SeatRepositoryTests
         Assert.NotNull(result);
         Assert.Equal(2, result.Count);
         Assert.Contains(result, s => s.SeatNumber == 1);
-        Assert.Contains(result, s => s.SeatNumber == 3);
+        Assert.Contains(result, s => s.SeatNumber == 2);
     }
 
     [Fact]
@@ -125,7 +125,7 @@ public class SeatRepositoryTests
         await ctx.SaveChangesAsync();
 
         SeatRepository repo = new(ctx);
-        SeatListFilterDTO filters = new() { DepartureDate = new DateOnly(2026, 2, 15) };
+        SeatListFilterDTO filters = new() { DepartureDate = new DateTimeOffset(2026, 2, 15, 0, 0, 0, TimeSpan.FromHours(-3)) };
 
         // Act
         System.Collections.Generic.List<Seat> result = (await repo.ListAsync(filters)).ToList();
