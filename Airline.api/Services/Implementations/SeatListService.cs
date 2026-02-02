@@ -25,7 +25,17 @@ public class SeatListService(ISeatRepository seatRepository)
             .Select(s => new SeatTicketListDTO(s))
             .GroupBy(s => new { s.Price, s.FlightNumber })
             .Select(g => g.First())
+            .Select(s => s with
+            {
+                Departure = filters.DepartureDate?.Offset != null
+                    ? s.Departure.ToOffset(filters.DepartureDate.Value.Offset)
+                    : s.Departure,
+                Arrival = filters.DepartureDate?.Offset != null
+                    ? s.Arrival.ToOffset(filters.DepartureDate.Value.Offset)
+                    : s.Arrival
+            })
             .ToList();
+
 
         return tickets;
     }
