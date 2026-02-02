@@ -15,7 +15,7 @@
 ---
 
 ## Visão Geral
-A `Airline API` faz parte da "Saga dos Aviõeszinhos", que tem o objetivo de fazer uma aplicação completa, usando como contexto um app de compra de passagens aéreas. Esse projeto contempla a parte da API que será consimida pelo frontend. O objetivo é que ela tenha todas as rotas necessárias para a criação, gerenciamento e venda de passagens, que futuramente poderão ser usadas, tanto pelo app para o usuário final, quanto por um portal de cadastro de voos, rotas etc...
+A `Airline API` faz parte da "Saga dos Aviõeszinhos", que tem o objetivo de fazer uma aplicação completa, usando como contexto um app de compra de passagens aéreas. Esse projeto contempla a parte da API que será consumida pelo frontend. O objetivo é que ela tenha todas as rotas necessárias para a criação, gerenciamento e venda de passagens, que futuramente poderão ser usadas, tanto pelo app para o usuário final, quanto por um portal de cadastro de voos, rotas etc...
 
 ---
 
