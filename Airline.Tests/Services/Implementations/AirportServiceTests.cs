@@ -32,7 +32,8 @@ public class AirportServiceTests
             "GRU",
             "São Paulo International Airport",
             "São Paulo",
-            "Brazil"
+            "Brazil",
+            "Brasilia Standard Time"
         );
 
         int expectedAirportId = 1;
@@ -57,7 +58,8 @@ public class AirportServiceTests
             "GRUSP",
             "São Paulo International Airport",
             "São Paulo",
-            "Brazil"
+            "Brazil",
+            "Brasilia Standard Time"
         );
 
         // Act & Assert
@@ -76,7 +78,8 @@ public class AirportServiceTests
             "gru",
             "São Paulo International Airport",
             "São Paulo",
-            "Brazil"
+            "Brazil",
+            "Brasilia Standard Time"
         );
 
         // Act & Assert
@@ -95,7 +98,8 @@ public class AirportServiceTests
             "GR1",
             "São Paulo International Airport",
             "São Paulo",
-            "Brazil"
+            "Brazil",
+            "Brasilia Standard Time"
         );
 
         // Act & Assert
@@ -114,7 +118,8 @@ public class AirportServiceTests
             "JPA",
             "João Pessoa International Airport",
             "João Pessoa",
-            "Brazil"
+            "Brazil",
+            "Brasilia Standard Time"
         );
 
         _airportRepositoryMock
@@ -129,7 +134,9 @@ public class AirportServiceTests
             r => r.InsertAirportAsync(It.Is<Airport>(a =>
                 a.IATACode == "JPA" &&
                 a.Name == "João Pessoa International Airport" &&
-                a.City == "João Pessoa"
+                a.City == "João Pessoa" &&
+                a.Country == "Brazil" &&
+                a.TimeZoneName == "Brasilia Standard Time"
             )),
             Times.Once
         );

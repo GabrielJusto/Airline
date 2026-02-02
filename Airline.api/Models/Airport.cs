@@ -15,6 +15,10 @@ public class Airport
     public string Name { get; set; } = null!;
     public string City { get; set; } = null!;
     public string Country { get; set; } = null!;
+    public string TimeZoneName { get; set; } = null!;
+
+    [NotMapped]
+    public TimeZoneInfo TimeZone => TimeZoneInfo.FindSystemTimeZoneById(TimeZoneName);
 
     public Airport() { }
 
@@ -24,5 +28,6 @@ public class Airport
         Name = data.Name;
         City = data.City;
         Country = data.Country;
+        TimeZoneName = data.TimeZoneName;
     }
 }

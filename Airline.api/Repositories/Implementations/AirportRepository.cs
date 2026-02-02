@@ -1,5 +1,4 @@
 using Airline.Database;
-using Airline.DTO;
 using Airline.DTO.AirportDTOs;
 using Airline.Models;
 using Airline.Repositories.Interfaces;
