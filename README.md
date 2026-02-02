@@ -1,12 +1,11 @@
 
 # Airline API 
 
-Este projeto foi criado com o objetivo de aprender a fazer uma API REST em .NET. Estou usando um contexto de uma empresa aéria para desenvolver a API, o objetivo é fazer um sistema que seja possível cadastrar aviões, rotas, calcular preço de passagens e simular a venda de passagens para um voo. Contrubuições são sempre bem-vindas :)
+A Airline API faz parte da "Saga dos Aviõeszinhos", que tem o objetivo de fazer uma aplicação completa, usando como contexto um app de compra de passagens aéreas. Esse projeto contempla a parte da API que será consimida pelo frontend. O objetivo é que ela tenha todas as rotas necessárias para a criação, gerenciamento e venda de passagens, que futuramente poderão ser usadas, tanto pelo app para o usuário final, quanto por um portal de cadastro de voos, rotas etc..
 
 ---
 
 ## Sumário
-- [Visão Geral](#visão-geral)
 - [Requisitos](#requisitos)
 - [Como Executar](#como-executar)
 - [Execução via Docker](#execução-via-docker)
@@ -14,17 +13,6 @@ Este projeto foi criado com o objetivo de aprender a fazer uma API REST em .NET.
 - [Documentação](#documentação)
 - [Contribuindo](#contribuindo)
 - [Contato](#contato)
-
----
-
-## Visão Geral
-Esta API permite:
-- Cadastro e consulta de aeroportos, aviões, voos e assentos
-- Compra de tickets
-- Filtros passagens para busca de voos e assentos
-- Autenticação JWT para rotas protegidas
-
-A arquitetura segue boas práticas REST e utiliza .NET 9, Entity Framework Core e PostgreSQL.
 
 ---
 
