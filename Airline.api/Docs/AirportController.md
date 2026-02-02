@@ -130,4 +130,4 @@ Retorna um array de `AirportListDetailDTO` com o formato:
 **Notas / Observações:**
 - A listagem retorna todos os aeroportos se nenhum filtro for fornecido.
 - Filtros podem ser combinados para resultados mais específicos (ex.: filtrar por cidade AND país).
-- Esta operação é assíncrona.
+
