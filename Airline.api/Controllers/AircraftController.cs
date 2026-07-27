@@ -3,6 +3,7 @@ using Airline.Exceptions;
 using Airline.Models;
 using Airline.Repositories.Interfaces;
 using Airline.RequestBodies;
+using Airline.Services.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,17 +11,28 @@ namespace Airline.Controllers;
 
 [ApiController]
 [Route("aircraft")]
-public class AircraftController(IAircraftRepository aircraftRepository) : ControllerBase
+public class AircraftController(
+    IAircraftRepository aircraftRepository, 
+    IAircraftService aircraftService
+) : ControllerBase
 {
 
     private readonly IAircraftRepository _aircraftRepository = aircraftRepository;
+    private readonly IAircraftService _aircraftService = aircraftService;
 
     [HttpPost("create")]
     public IResult Create([FromBody] AircraftCreateDTO createData)
     {
-        _aircraftRepository.Insert(createData);
+        bool created = _aircraftService.CreateAircraft(createData);
 
-        return Results.Created();
+        if(created)
+        {
+            return Results.Created();
+        }
+        else
+        {
+            return Results.BadRequest(new { Message = "Failed to create aircraft." });
+        }
 
     }
 
@@ -29,7 +41,12 @@ public class AircraftController(IAircraftRepository aircraftRepository) : Contro
         [FromQuery] int page = 1,
         [FromQuery] int perPage = 10)
     {
-        return Results.Ok(_aircraftRepository.ListAircrafts());
+        AircraftListFiltersDTO filters = new()
+        {
+            Page = page,
+            PerPage = perPage
+        };
+        return Results.Ok(_aircraftRepository.ListAircrafts(filters));
     }
 
 

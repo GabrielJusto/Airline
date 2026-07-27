@@ -18,10 +18,12 @@ public class AircraftRepository(AirlineContext context) : IAircraftRepository
         return _context.Aircrafts.FirstOrDefault(a => a.AircraftID == aircraftId);
     }
 
-    public IEnumerable<Aircraft> ListAircrafts()
+    public IReadOnlyList<Aircraft> ListAircrafts(AircraftListFiltersDTO filters)
     {
-
-        return _context.Aircrafts.ToList();
+        return _context.Aircrafts
+            .Skip((filters.Page - 1) * filters.PerPage)
+            .Take(filters.PerPage)
+            .ToList();
     }
 
     public void Insert(AircraftCreateDTO data)
