@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 using Airline.DTO;
 using Airline.Exceptions;
 using Airline.Models;
@@ -20,17 +22,26 @@ public class AircraftController(
     [HttpPost("create")]
     public IResult Create([FromBody] AircraftCreateDTO createData)
     {
-        bool created = _aircraftService.CreateAircraft(createData);
-
-        if(created)
+        try
         {
-            return Results.Created();
-        }
-        else
-        {
-            return Results.InternalServerError(new { Message = "Failed to create aircraft." });
-        }
+            bool created = _aircraftService.CreateAircraft(createData);
 
+            if(created)
+            {
+                return Results.Created();
+            }
+            else
+            {
+                return Results.InternalServerError(new { Message = "Failed to create aircraft." });
+            }
+        }
+        catch(ValidationException e)
+        {
+            return Results.BadRequest(new { Message = e.Message });
+        }catch(Exception)
+        {
+            return Results.InternalServerError(new { Message = "An error occurred while creating the aircraft." });
+        }
     }
 
     [HttpGet("list")]
@@ -77,6 +88,10 @@ public class AircraftController(
         catch(EntityNotFoundException e)
         {
             return Results.NotFound(new { Message = e.Message });
+        }
+        catch(ValidationException e)
+        {
+            return Results.BadRequest(new { Message = e.Message });
         }
         catch(Exception)
         {

@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 using Airline.DTO;
 using Airline.Exceptions;
 using Airline.Models;
@@ -14,6 +16,7 @@ public class AircraftService(
 
     public bool CreateAircraft(AircraftCreateDTO createData)
     {
+        ValidateCreateData(createData);
         try
         {
             _aircraftRepository.Insert(createData);
@@ -60,6 +63,7 @@ public class AircraftService(
 
     public bool UpdateAircraft(AircraftUpdateDTO updateData)
     {
+        ValidateUpdateData(updateData);
         try
         {
             Aircraft? aircraft = _aircraftRepository.GetAircraft(updateData.AircraftId);
@@ -112,6 +116,44 @@ public class AircraftService(
         catch(Exception)
         {
             return false;
+        }
+    }
+
+    private static void ValidateUpdateData(AircraftUpdateDTO updateData)
+    {
+        ValidateNonNegativeValues(updateData.Capacity, updateData.Range, updateData.AverageFuelConsumption);
+    }
+
+    private static void ValidateCreateData(AircraftCreateDTO createData)
+    {
+        ValidateNonNegativeValues(createData.Capacity, createData.Range, createData.AverageFuelConsumption);
+    }
+
+    private static void ValidateNonNegativeValues(
+        int? capacity,
+        double? range,
+        double? averageFuelConsumption)
+    {
+        List<string> errors = [];
+
+        if(capacity.HasValue && capacity.Value < 0)
+        {
+            errors.Add("Capacity cannot be negative.");
+        }
+
+        if(range.HasValue && range.Value < 0)
+        {
+            errors.Add("Range cannot be negative.");
+        }
+
+        if(averageFuelConsumption.HasValue && averageFuelConsumption.Value < 0)
+        {
+            errors.Add("Average fuel consumption cannot be negative.");
+        }
+
+        if(errors.Count > 0)
+        {
+            throw new ValidationException(string.Join("; ", errors));
         }
     }
 }
