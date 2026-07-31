@@ -11,18 +11,19 @@ public class AircraftService(
 ) : IAircraftService
 {
     private readonly IAircraftRepository _aircraftRepository = aircraftRepository;
-    
+
     public bool CreateAircraft(AircraftCreateDTO createData)
     {
         try
         {
             _aircraftRepository.Insert(createData);
             return true;
-        }catch(Exception)
+        }
+        catch(Exception)
         {
             return false;
         }
-        
+
     }
 
     public IReadOnlyList<AircraftDetailDTO> ListAircrafts(AircraftListFiltersDTO filters)
@@ -33,7 +34,8 @@ public class AircraftService(
                 .Select(a => new AircraftDetailDTO(a))
                 .ToList();
 
-        }catch(Exception)
+        }
+        catch(Exception)
         {
             throw;
         }
@@ -49,9 +51,46 @@ public class AircraftService(
                 throw new EntityNotFoundException($"Aircraft with ID {aircraftId} not found.");
             }
             return new AircraftDetailDTO(aircraft);
-        }catch(Exception)
+        }
+        catch(Exception)
         {
             throw;
+        }
+    }
+
+    public bool UpdateAircraft(AircraftUpdateDTO updateData)
+    {
+        try
+        {
+            Aircraft? aircraft = _aircraftRepository.GetAircraft(updateData.AircraftId);
+
+            if(aircraft == null)
+            {
+                throw new EntityNotFoundException("Aircraft not found");
+            }
+
+            if(updateData.Capacity.HasValue)
+            {
+                aircraft.Capacity = updateData.Capacity.Value;
+            }
+
+            if(updateData.Range.HasValue)
+            {
+                aircraft.Range = updateData.Range.Value;
+            }
+
+            if(updateData.AverageFuelConsumption != null)
+            {
+                aircraft.AverageFuelConsumption = updateData.AverageFuelConsumption.Value;
+            }
+
+            _aircraftRepository.Update(aircraft);
+
+            return true;
+        }
+        catch(Exception)
+        {
+            return false;
         }
     }
 }

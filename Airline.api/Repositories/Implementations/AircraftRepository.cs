@@ -33,30 +33,9 @@ public class AircraftRepository(AirlineContext context) : IAircraftRepository
         _context.SaveChanges();
     }
 
-    public void Update(AircraftUpdateDTO updateData)
+    public void Update(Aircraft aircraft)
     {
-        Aircraft? aircraft = _context.Aircrafts.FirstOrDefault(a => a.AircraftID == updateData.AircraftId);
-
-        if(aircraft == null)
-        {
-            throw new EntityNotFoundException("Aircraft not found");
-        }
-
-        if(updateData.Capacity.HasValue)
-        {
-            aircraft.Capacity = updateData.Capacity.Value;
-        }
-
-        if(updateData.Range.HasValue)
-        {
-            aircraft.Range = updateData.Range.Value;
-        }
-
-        if(updateData.AverageFuelConsumption != null)
-        {
-            aircraft.AverageFuelConsumption = updateData.AverageFuelConsumption.Value;
-        }
-
+        _context.Aircrafts.Update(aircraft);
         _context.SaveChanges();
     }
 

@@ -9,6 +9,6 @@ public interface IAircraftRepository
     public IReadOnlyList<Aircraft> ListAircrafts(AircraftListFiltersDTO filters);
     public Aircraft? GetAircraft(int aircraftId);
     public void Insert(AircraftCreateDTO createData);
-    public void Update(AircraftUpdateDTO updateData);
+    public void Update(Aircraft aircraft);
     public Task DeleteAsync(int aircraftId);
 }

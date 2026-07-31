@@ -12,7 +12,7 @@ namespace Airline.Controllers;
 [ApiController]
 [Route("aircraft")]
 public class AircraftController(
-    IAircraftRepository aircraftRepository, 
+    IAircraftRepository aircraftRepository,
     IAircraftService aircraftService
 ) : ControllerBase
 {
@@ -57,10 +57,12 @@ public class AircraftController(
         {
             AircraftDetailDTO? aircraftDetail = _aircraftService.GetAircraftDetail(aircraftId);
             return Results.Ok(aircraftDetail);
-        }catch(EntityNotFoundException e)
+        }
+        catch(EntityNotFoundException e)
         {
             return Results.NotFound(new { Message = e.Message });
-        }catch(Exception)
+        }
+        catch(Exception)
         {
             return Results.BadRequest(new { Message = "An error occurred while retrieving the aircraft details." });
         }
@@ -72,15 +74,16 @@ public class AircraftController(
         try
         {
             AircraftUpdateDTO updateDto = new(updateData, id);
-            _aircraftRepository.Update(updateDto);
-            return Results.Ok();
+            _aircraftService.UpdateAircraft(updateDto);
+            return Results.NoContent();
         }
         catch(EntityNotFoundException e)
         {
             return Results.NotFound(new { Message = e.Message });
+        }catch(Exception)
+        {
+            return Results.BadRequest(new { Message = "An error occurred while updating the aircraft." });
         }
-
-
     }
 
     [HttpDelete("{aircraftId}")]
