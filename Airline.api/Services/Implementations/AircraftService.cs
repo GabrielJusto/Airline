@@ -64,6 +64,7 @@ public class AircraftService(
     public bool UpdateAircraft(AircraftUpdateDTO updateData)
     {
         ValidateUpdateData(updateData);
+
         try
         {
             Aircraft? aircraft = _aircraftRepository.GetAircraft(updateData.AircraftId);
@@ -92,6 +93,10 @@ public class AircraftService(
 
             return true;
         }
+        catch(EntityNotFoundException)
+        {
+            throw;
+        }
         catch(Exception)
         {
             return false;
@@ -112,6 +117,10 @@ public class AircraftService(
             await _aircraftRepository.DeleteAsync(aircraftId);
 
             return true;
+        }
+        catch(EntityNotFoundException)
+        {
+            throw;
         }
         catch(Exception)
         {
