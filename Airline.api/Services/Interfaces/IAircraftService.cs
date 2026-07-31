@@ -9,4 +9,5 @@ public interface IAircraftService
     public IReadOnlyList<AircraftDetailDTO> ListAircrafts(AircraftListFiltersDTO filters);
     public AircraftDetailDTO? GetAircraftDetail(int aircraftId);
     public bool UpdateAircraft(AircraftUpdateDTO updateData);
+    public Task<bool> DeleteAircraftAsync(int aircraftId);
 }

@@ -93,4 +93,25 @@ public class AircraftService(
             return false;
         }
     }
+
+    public async Task<bool> DeleteAircraftAsync(int aircraftId)
+    {
+        try
+        {
+            Aircraft? aircraft = _aircraftRepository.GetAircraft(aircraftId);
+
+            if(aircraft == null)
+            {
+                throw new EntityNotFoundException("Aircraft not found");
+            }
+
+            await _aircraftRepository.DeleteAsync(aircraftId);
+
+            return true;
+        }
+        catch(Exception)
+        {
+            return false;
+        }
+    }
 }

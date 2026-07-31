@@ -12,12 +12,9 @@ namespace Airline.Controllers;
 [ApiController]
 [Route("aircraft")]
 public class AircraftController(
-    IAircraftRepository aircraftRepository,
     IAircraftService aircraftService
 ) : ControllerBase
 {
-
-    private readonly IAircraftRepository _aircraftRepository = aircraftRepository;
     private readonly IAircraftService _aircraftService = aircraftService;
 
     [HttpPost("create")]
@@ -80,7 +77,8 @@ public class AircraftController(
         catch(EntityNotFoundException e)
         {
             return Results.NotFound(new { Message = e.Message });
-        }catch(Exception)
+        }
+        catch(Exception)
         {
             return Results.InternalServerError(new { Message = "An error occurred while updating the aircraft." });
         }
@@ -91,8 +89,11 @@ public class AircraftController(
     {
         try
         {
-            await _aircraftRepository.DeleteAsync(aircraftId);
-            return Results.Ok();
+            if(await _aircraftService.DeleteAircraftAsync(aircraftId))
+            {
+                return Results.NoContent();
+            }
+            return Results.InternalServerError(new { Message = "Failed to delete aircraft." });
         }
         catch(EntityNotFoundException e)
         {
