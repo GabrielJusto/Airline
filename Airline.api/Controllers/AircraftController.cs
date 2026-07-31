@@ -46,21 +46,24 @@ public class AircraftController(
             Page = page,
             PerPage = perPage
         };
-        return Results.Ok(_aircraftRepository.ListAircrafts(filters));
+        return Results.Ok(_aircraftService.ListAircrafts(filters));
     }
 
 
     [HttpGet("{aircraftId}")]
     public IResult Detail(int aircraftId)
     {
-        Aircraft? aircraft = _aircraftRepository.GetAircraft(aircraftId);
-
-        if(aircraft == null)
+        try
         {
-            return Results.NotFound(new { Message = "Aircraft not found!" });
+            AircraftDetailDTO? aircraftDetail = _aircraftService.GetAircraftDetail(aircraftId);
+            return Results.Ok(aircraftDetail);
+        }catch(EntityNotFoundException e)
+        {
+            return Results.NotFound(new { Message = e.Message });
+        }catch(Exception)
+        {
+            return Results.BadRequest(new { Message = "An error occurred while retrieving the aircraft details." });
         }
-
-        return Results.Ok(_aircraftRepository.GetAircraft(aircraftId));
     }
 
     [HttpPatch("update/{id}")]

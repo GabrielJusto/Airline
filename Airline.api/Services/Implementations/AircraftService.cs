@@ -1,4 +1,6 @@
 using Airline.DTO;
+using Airline.Exceptions;
+using Airline.Models;
 using Airline.Repositories.Interfaces;
 using Airline.Services.Interfaces;
 
@@ -31,6 +33,22 @@ public class AircraftService(
                 .Select(a => new AircraftDetailDTO(a))
                 .ToList();
 
+        }catch(Exception)
+        {
+            throw;
+        }
+    }
+
+    public AircraftDetailDTO? GetAircraftDetail(int aircraftId)
+    {
+        try
+        {
+            Aircraft? aircraft = _aircraftRepository.GetAircraft(aircraftId);
+            if(aircraft == null)
+            {
+                throw new EntityNotFoundException($"Aircraft with ID {aircraftId} not found.");
+            }
+            return new AircraftDetailDTO(aircraft);
         }catch(Exception)
         {
             throw;
