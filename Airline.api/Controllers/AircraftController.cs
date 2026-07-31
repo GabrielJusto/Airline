@@ -31,7 +31,7 @@ public class AircraftController(
         }
         else
         {
-            return Results.BadRequest(new { Message = "Failed to create aircraft." });
+            return Results.InternalServerError(new { Message = "Failed to create aircraft." });
         }
 
     }
@@ -64,7 +64,7 @@ public class AircraftController(
         }
         catch(Exception)
         {
-            return Results.BadRequest(new { Message = "An error occurred while retrieving the aircraft details." });
+            return Results.InternalServerError(new { Message = "An error occurred while retrieving the aircraft details." });
         }
     }
 
@@ -82,7 +82,7 @@ public class AircraftController(
             return Results.NotFound(new { Message = e.Message });
         }catch(Exception)
         {
-            return Results.BadRequest(new { Message = "An error occurred while updating the aircraft." });
+            return Results.InternalServerError(new { Message = "An error occurred while updating the aircraft." });
         }
     }
 
