@@ -8,16 +8,16 @@ using Route = Airline.Models.Route;
 
 namespace Airline.Services.Implementations;
 
-public class FlightCreateService(
-    IFlightRepository _flightRepository,
-    IAircraftRepository _aircraftRepository,
-    IRouteRepository _routeRepository
-) : IFlightCreateService
+public class FlightService(
+    IFlightRepository flightRepository,
+    IAircraftRepository aircraftRepository,
+    IRouteRepository routeRepository
+) : IFlightService
 {
+    private readonly IFlightRepository _flightRepository = flightRepository;
+    private readonly IAircraftRepository _aircraftRepository = aircraftRepository;
+    private readonly IRouteRepository _routeRepository = routeRepository;
 
-    private readonly IFlightRepository _flightRepository = _flightRepository;
-    private readonly IAircraftRepository _aircraftRepository = _aircraftRepository;
-    private readonly IRouteRepository _routeRepository = _routeRepository;
     public async Task<int> Create(FlightCreateDTO data)
     {
         Aircraft? aircraft = _aircraftRepository.GetAircraft(data.AircraftId);
@@ -35,5 +35,16 @@ public class FlightCreateService(
         };
 
         return await _flightRepository.Create(flight);
+    }
+
+    public async Task<FlightDetailDTO> Detail(int flightId)
+    {
+        Flight? flight = await _flightRepository.GetByIdAsync(flightId);
+        if(flight == null)
+        {
+            throw new EntityNotFoundException("Flight not found");
+        }
+
+        return new FlightDetailDTO(flight);
     }
 }

@@ -12,14 +12,12 @@ namespace Airline.Controllers;
 [ApiController]
 [Route("flight")]
 public class FlightController(
-    IFlightCreateService flightCreateService,
-    IFlightDetailService flightDetailService,
+    IFlightService flightService,
     IFlightRepository flightRepository
     ) : ControllerBase
 {
 
-    private readonly IFlightCreateService _flightCreateService = flightCreateService;
-    private readonly IFlightDetailService _flightDetailService = flightDetailService;
+    private readonly IFlightService _flightService = flightService;
     private readonly IFlightRepository _flightRepository = flightRepository;
 
     [HttpPost("create")]
@@ -27,7 +25,7 @@ public class FlightController(
     {
         try
         {
-            int flightId = await _flightCreateService.Create(data);
+            int flightId = await _flightService.Create(data);
             return Results.Created();
         }
         catch(EntityNotFoundException ex)
@@ -41,7 +39,7 @@ public class FlightController(
     {
         try
         {
-            FlightDetailDTO flight = await _flightDetailService.Detail(flightId);
+            FlightDetailDTO flight = await _flightService.Detail(flightId);
             return Results.Ok(flight);
         }
         catch(EntityNotFoundException ex)
