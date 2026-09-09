@@ -31,34 +31,21 @@ public class AircraftService(
 
     public IReadOnlyList<AircraftDetailDTO> ListAircrafts(AircraftListFiltersDTO filters)
     {
-        try
-        {
-            return _aircraftRepository.ListAircrafts(filters)
-                .Select(a => new AircraftDetailDTO(a))
-                .ToList();
 
-        }
-        catch(Exception)
-        {
-            throw;
-        }
+        return _aircraftRepository.ListAircrafts(filters)
+            .Select(a => new AircraftDetailDTO(a))
+            .ToList();
+
     }
 
     public AircraftDetailDTO? GetAircraftDetail(int aircraftId)
     {
-        try
+        Aircraft? aircraft = _aircraftRepository.GetAircraft(aircraftId);
+        if(aircraft == null)
         {
-            Aircraft? aircraft = _aircraftRepository.GetAircraft(aircraftId);
-            if(aircraft == null)
-            {
-                throw new EntityNotFoundException(nameof(Aircraft), aircraftId);
-            }
-            return new AircraftDetailDTO(aircraft);
+            throw new EntityNotFoundException(nameof(Aircraft), aircraftId);
         }
-        catch(Exception)
-        {
-            throw;
-        }
+        return new AircraftDetailDTO(aircraft);
     }
 
     public bool UpdateAircraft(AircraftUpdateDTO updateData)
