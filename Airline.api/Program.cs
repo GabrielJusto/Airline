@@ -1,9 +1,11 @@
 
 
+using System.Diagnostics;
 using System.Text.Json.Serialization;
 
 using Airline.Configuration;
 using Airline.Database;
+using Airline.Exceptions.Handler;
 using Airline.Models;
 using Airline.Repositories.Implementations;
 using Airline.Repositories.Interfaces;
@@ -71,9 +73,24 @@ builder.Services.AddScoped<IAircraftService, AircraftService>();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.Configure<JwtConfiguration>(builder.Configuration.GetSection("Jwt"));
 
+builder.Services.AddExceptionHandler<ExceptionHandler>();
+builder.Services.AddProblemDetails(options =>
+{
+    // Applied to every problem details response, including the ones the framework writes by itself.
+    options.CustomizeProblemDetails = context =>
+    {
+        // Path only, without the query string: it carries the device api key.
+        context.ProblemDetails.Instance = context.HttpContext.Request.Path;
+
+        // Same value that Serilog stamps on the log entries, so a reported id finds the trace.
+        context.ProblemDetails.Extensions["traceId"] =
+            Activity.Current?.TraceId.ToString() ?? context.HttpContext.TraceIdentifier;
+    };
+});
+
 var app = builder.Build();
 
-
+app.UseExceptionHandler();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

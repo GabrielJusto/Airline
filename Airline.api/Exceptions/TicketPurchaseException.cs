@@ -1,13 +1,20 @@
 
+using Airline.Observability;
+
 namespace Airline.Exceptions;
 
-public class TicketPurchaseException : Exception
+public class TicketPurchaseException : AirlineException
 {
-    public TicketPurchaseException() : base("Error trying to purchase a ticket.")
-    {
-    }
-    public TicketPurchaseException(string message)
-        : base(message)
+    public int UserId { get; }
+    public int FlightId { get; }
+
+    public TicketPurchaseException(int userId, int flightId)
+        : base($"User {userId} already has a ticket for flight {flightId}.",
+        new Dictionary<string, object?>
+        {
+            [LogAttributeNames.UserId] = userId,
+            [LogAttributeNames.FlightId] = flightId
+        })
     {
     }
 }

@@ -51,7 +51,7 @@ public class AircraftService(
             Aircraft? aircraft = _aircraftRepository.GetAircraft(aircraftId);
             if(aircraft == null)
             {
-                throw new EntityNotFoundException($"Aircraft with ID {aircraftId} not found.");
+                throw new EntityNotFoundException(nameof(Aircraft), aircraftId);
             }
             return new AircraftDetailDTO(aircraft);
         }
@@ -71,7 +71,7 @@ public class AircraftService(
 
             if(aircraft == null)
             {
-                throw new EntityNotFoundException("Aircraft not found");
+                throw new EntityNotFoundException(nameof(Aircraft), updateData.AircraftId);
             }
 
             if(updateData.Capacity.HasValue)
@@ -111,7 +111,7 @@ public class AircraftService(
 
             if(aircraft == null)
             {
-                throw new EntityNotFoundException("Aircraft not found");
+                throw new EntityNotFoundException(nameof(Aircraft), aircraftId);
             }
 
             await _aircraftRepository.DeleteAsync(aircraftId);

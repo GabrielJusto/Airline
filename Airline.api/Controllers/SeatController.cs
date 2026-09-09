@@ -1,8 +1,5 @@
-using System.ComponentModel.DataAnnotations;
-
 using Airline.DTO;
 using Airline.DTO.SeatDTOs;
-using Airline.Exceptions;
 using Airline.Services.Implementations;
 using Airline.Services.Interfaces;
 
@@ -23,29 +20,14 @@ public class SeatController(
     [HttpPost("create")]
     public async Task<IResult> Create([FromBody] SeatCreateRequestDTO createData)
     {
-        try
-        {
-            await _seatCreateService.CreateAsync(createData);
-            return Results.Created();
-        }
-        catch(EntityNotFoundException e)
-        {
-            return Results.NotFound(new { Message = e.Message });
-        }
+        await _seatCreateService.CreateAsync(createData);
+        return Results.Created();
     }
 
     [HttpGet("list-available-for-ticket")]
     public async Task<IResult> ListAvailableForTicket([FromQuery] SeatListFilterDTO filters)
     {
-        try
-        {
-            List<SeatTicketListDTO> seats = await _seatListService.ListAvailableSeatsForTicket(filters);
-            return Results.Ok(seats);
-        }
-        catch(ValidationException e)
-        {
-            return Results.BadRequest(e.Message);
-        }
-
+        List<SeatTicketListDTO> seats = await _seatListService.ListAvailableSeatsForTicket(filters);
+        return Results.Ok(seats);
     }
 }

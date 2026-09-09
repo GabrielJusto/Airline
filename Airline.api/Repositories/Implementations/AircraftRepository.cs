@@ -45,7 +45,7 @@ public class AircraftRepository(AirlineContext context) : IAircraftRepository
 
         if(aircraft == null)
         {
-            throw new EntityNotFoundException("Aircraft not found");
+            throw new EntityNotFoundException(nameof(Aircraft), aircraftId);
         }
 
         _context.Aircrafts.Remove(aircraft);

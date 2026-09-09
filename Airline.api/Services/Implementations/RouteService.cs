@@ -24,8 +24,8 @@ public class RouteService(
     {
         Validate(data);
 
-        Airport? fromAirport = await _airportService.GetAirportByIdAsync(data.FromAirportId) ?? throw new EntityNotFoundException("From airport not found.");
-        Airport? toAirport = await _airportService.GetAirportByIdAsync(data.ToAirportId) ?? throw new EntityNotFoundException("Destination airport not found.");
+        Airport? fromAirport = await _airportService.GetAirportByIdAsync(data.FromAirportId) ?? throw new EntityNotFoundException(nameof(Airport), data.FromAirportId);
+        Airport? toAirport = await _airportService.GetAirportByIdAsync(data.ToAirportId) ?? throw new EntityNotFoundException(nameof(Airport), data.ToAirportId);
 
 
         Route route = new(data)

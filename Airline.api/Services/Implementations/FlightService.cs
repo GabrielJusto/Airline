@@ -22,11 +22,11 @@ public class FlightService(
     {
         Aircraft? aircraft = _aircraftRepository.GetAircraft(data.AircraftId);
         if(aircraft == null)
-            throw new EntityNotFoundException("Aircraft not found");
+            throw new EntityNotFoundException(nameof(Aircraft), data.AircraftId);
 
         Route? route = await _routeRepository.GetByIdAsync(data.RouteId);
         if(route == null)
-            throw new EntityNotFoundException("Route not found");
+            throw new EntityNotFoundException(nameof(Route), data.RouteId);
 
         Flight flight = new(data)
         {
@@ -42,7 +42,7 @@ public class FlightService(
         Flight? flight = await _flightRepository.GetByIdAsync(flightId);
         if(flight == null)
         {
-            throw new EntityNotFoundException("Flight not found");
+            throw new EntityNotFoundException(nameof(Flight), flightId);
         }
 
         return new FlightDetailDTO(flight);

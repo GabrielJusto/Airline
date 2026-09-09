@@ -17,7 +17,7 @@ public class SeatCreateService(
     {
         Flight? flight = await _flightRepository.GetByIdAsync(data.FlightId);
         if(flight is null)
-            throw new EntityNotFoundException("Flight not found");
+            throw new EntityNotFoundException(nameof(Flight), data.FlightId);
 
         List<Seat> newSeats = new();
 

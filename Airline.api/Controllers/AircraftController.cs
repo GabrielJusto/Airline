@@ -1,9 +1,5 @@
-using System.ComponentModel.DataAnnotations;
-
 using Airline.DTO;
-using Airline.Exceptions;
 using Airline.Models;
-using Airline.Repositories.Interfaces;
 using Airline.RequestBodies;
 using Airline.Services.Interfaces;
 
@@ -22,26 +18,18 @@ public class AircraftController(
     [HttpPost("create")]
     public IResult Create([FromBody] AircraftCreateDTO createData)
     {
-        try
-        {
-            bool created = _aircraftService.CreateAircraft(createData);
 
-            if(created)
-            {
-                return Results.Created();
-            }
-            else
-            {
-                return Results.InternalServerError(new { Message = "Failed to create aircraft." });
-            }
-        }
-        catch(ValidationException e)
+        bool created = _aircraftService.CreateAircraft(createData);
+
+        if(created)
         {
-            return Results.BadRequest(new { Message = e.Message });
-        }catch(Exception)
-        {
-            return Results.InternalServerError(new { Message = "An error occurred while creating the aircraft." });
+            return Results.Created();
         }
+        else
+        {
+            return Results.InternalServerError(new { Message = "Failed to create aircraft." });
+        }
+
     }
 
     [HttpGet("list")]
@@ -61,58 +49,27 @@ public class AircraftController(
     [HttpGet("{aircraftId}")]
     public IResult Detail(int aircraftId)
     {
-        try
-        {
-            AircraftDetailDTO? aircraftDetail = _aircraftService.GetAircraftDetail(aircraftId);
-            return Results.Ok(aircraftDetail);
-        }
-        catch(EntityNotFoundException e)
-        {
-            return Results.NotFound(new { Message = e.Message });
-        }
-        catch(Exception)
-        {
-            return Results.InternalServerError(new { Message = "An error occurred while retrieving the aircraft details." });
-        }
+        AircraftDetailDTO? aircraftDetail = _aircraftService.GetAircraftDetail(aircraftId);
+        return Results.Ok(aircraftDetail);
+
     }
 
     [HttpPatch("update/{id}")]
     public IResult Update([FromBody] AircraftUpdateRequestBody updateData, int id)
     {
-        try
-        {
-            AircraftUpdateDTO updateDto = new(updateData, id);
-            _aircraftService.UpdateAircraft(updateDto);
-            return Results.NoContent();
-        }
-        catch(EntityNotFoundException e)
-        {
-            return Results.NotFound(new { Message = e.Message });
-        }
-        catch(ValidationException e)
-        {
-            return Results.BadRequest(new { Message = e.Message });
-        }
-        catch(Exception)
-        {
-            return Results.InternalServerError(new { Message = "An error occurred while updating the aircraft." });
-        }
+        AircraftUpdateDTO updateDto = new(updateData, id);
+        _aircraftService.UpdateAircraft(updateDto);
+        return Results.NoContent();
+
     }
 
     [HttpDelete("{aircraftId}")]
     public async Task<IResult> RemoveAsync(int aircraftId)
     {
-        try
+        if(await _aircraftService.DeleteAircraftAsync(aircraftId))
         {
-            if(await _aircraftService.DeleteAircraftAsync(aircraftId))
-            {
-                return Results.NoContent();
-            }
-            return Results.InternalServerError(new { Message = "Failed to delete aircraft." });
+            return Results.NoContent();
         }
-        catch(EntityNotFoundException e)
-        {
-            return Results.NotFound(new { Message = e.Message });
-        }
+        return Results.InternalServerError(new { Message = "Failed to delete aircraft." });
     }
 }
