@@ -7,6 +7,7 @@ namespace Airline.Validators;
 public class ValidatorService(IValidation[] validations)
 {
     private readonly IValidation[] _validations = validations;
+    private readonly IList<AirlineException> _exceptions = [];
     private string[] errors = [];
     public void Validate()
     {
@@ -16,8 +17,9 @@ public class ValidatorService(IValidation[] validations)
             {
                 validation.Validate();
             }
-            catch(ValidationException ex)
+            catch(AirlineException ex)
             {
+                _exceptions.Add(ex);
                 this.errors = this.errors.Append(ex.Message).ToArray();
             }
 
@@ -29,7 +31,7 @@ public class ValidatorService(IValidation[] validations)
         Validate();
         if(HasErrors())
         {
-            throw new ValidationServiceException(GetErrors());
+            throw new ValidationServiceException(_exceptions, GetErrors());
         }
     }
 

@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 
 using Airline.DTO;
 using Airline.Repositories.Interfaces;

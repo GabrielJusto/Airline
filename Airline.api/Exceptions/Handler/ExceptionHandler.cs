@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -27,6 +28,27 @@ public class ExceptionHandler : IExceptionHandler
         CancellationToken cancellationToken)
     {
         (int status, LogLevel level) = Classify(exception);
+
+        if(exception is ValidationServiceException validationException)
+        {
+            foreach(AirlineException mapedException in validationException.Exceptions)
+            {
+                LogFailure(mapedException, status, level, httpContext);
+
+                Activity.Current?.SetStatus(ActivityStatusCode.Error, mapedException.GetType().Name);
+                Activity.Current?.AddException(mapedException);
+
+            }
+
+            httpContext.Response.StatusCode = status;
+
+            return await _problemDetailsService.TryWriteAsync(new ProblemDetailsContext
+            {
+                HttpContext = httpContext,
+                Exception = exception,
+                ProblemDetails = BuildProblemDetails(exception, status),
+            });
+        }
 
         LogFailure(exception, status, level, httpContext);
 
@@ -85,7 +107,7 @@ public class ExceptionHandler : IExceptionHandler
             Detail = status >= StatusCodes.Status500InternalServerError ? ServerErrorDetail : exception.Message,
         };
 
-        if(exception is DtoValidationException validation)
+        if(exception is ValidationServiceException validation)
         {
             problem.Extensions["errors"] = validation.Errors;
         }

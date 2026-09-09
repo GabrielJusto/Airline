@@ -1,6 +1,16 @@
 namespace Airline.Exceptions;
 
-public class ValidationServiceException(string[] errors) : Exception
+public class ValidationServiceException : Exception
 {
-    public string[] Errors = errors;
+    public IList<AirlineException> Exceptions { get; }
+    public string[] Errors { get; }
+
+    public ValidationServiceException(
+        IList<AirlineException> exceptions,
+        string[] errors
+    )
+    {
+        Exceptions = exceptions;
+        Errors = errors;
+    }
 }
