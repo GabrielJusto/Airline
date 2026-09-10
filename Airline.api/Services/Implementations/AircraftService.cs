@@ -130,26 +130,26 @@ public class AircraftService(
         double? range,
         double? averageFuelConsumption)
     {
-        List<string> errors = [];
+        Dictionary<string, List<string>> errors = new();
 
         if(capacity.HasValue && capacity.Value < 0)
         {
-            errors.Add("Capacity cannot be negative.");
+            errors.Add(nameof(AircraftCreateDTO.Capacity), ["Capacity cannot be negative."]);
         }
 
         if(range.HasValue && range.Value < 0)
         {
-            errors.Add("Range cannot be negative.");
+            errors.Add(nameof(AircraftCreateDTO.Range), ["Range cannot be negative."]);
         }
 
         if(averageFuelConsumption.HasValue && averageFuelConsumption.Value < 0)
         {
-            errors.Add("Average fuel consumption cannot be negative.");
+            errors.Add(nameof(AircraftCreateDTO.AverageFuelConsumption), ["Average fuel consumption cannot be negative."]);
         }
 
         if(errors.Count > 0)
         {
-            throw new ValidationException(string.Join("; ", errors));
+            throw new DtoValidationException(errors);
         }
     }
 }

@@ -15,7 +15,7 @@ public class AirportController(IAirportService airportService) : ControllerBase
 
 
     [HttpPost("create")]
-    public async Task<IResult> CreateAirport(AirportCreateDTO data)
+    public async Task<IResult> CreateAirport([FromBody] AirportCreateDTO data)
     {
 
         await _airportService.CreateAirport(data);
@@ -24,7 +24,7 @@ public class AirportController(IAirportService airportService) : ControllerBase
     }
 
     [HttpGet("list")]
-    public async Task<IResult> ListAirports(AirportListFilters filters)
+    public async Task<IResult> ListAirports([FromQuery] AirportListFilters filters)
     {
         List<AirportListDetailDTO> airports = await _airportService.ListAirportsAsync(filters);
         return Results.Ok(airports);

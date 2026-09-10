@@ -73,6 +73,7 @@ public class ExceptionHandler : IExceptionHandler
             TicketPurchaseException => (StatusCodes.Status400BadRequest, LogLevel.Warning),
             ValidationServiceException => (StatusCodes.Status400BadRequest, LogLevel.Warning),
             EntityNotFoundException => (StatusCodes.Status404NotFound, LogLevel.Warning),
+            DtoValidationException => (StatusCodes.Status400BadRequest, LogLevel.Warning),
             _ => (StatusCodes.Status500InternalServerError, LogLevel.Error),
         };
     }
