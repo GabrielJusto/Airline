@@ -7,6 +7,8 @@ public static class LogAttributeNames
     public const string EntityName = "airline.entity.name";
     public const string EntityKey = "airline.entity.key";
     public const string FlightId = "airline.flight.id";
+    public const string FromAirportId = "airline.from_airport.id";
+    public const string ToAirportId = "airline.to_airport.id";
 
 
 }

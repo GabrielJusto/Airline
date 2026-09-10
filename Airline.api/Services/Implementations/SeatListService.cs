@@ -15,7 +15,7 @@ public class SeatListService(ISeatRepository seatRepository)
     {
         if(filters.FromIATACode == null || filters.ToIATACode == null)
         {
-            throw new ValidationException("fomIATACode and toIATACode can not be null");
+            throw new ValidationException("fromIATACode and toIATACode can not be null");
         }
 
         IEnumerable<Seat> seats = await _seatRepository.ListAsync(filters);

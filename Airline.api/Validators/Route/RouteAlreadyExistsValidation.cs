@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
 using Airline.DTO;
+using Airline.Exceptions;
+using Airline.Observability;
 using Airline.Repositories.Interfaces;
 using Airline.RequestBodies;
 
@@ -27,7 +29,11 @@ public class RouteAlreadyExistsValidation(
 
         if(routes.Count != 0)
         {
-            throw new ValidationException("Route already exists.");
+            throw new EntityAlreadyExistsException(nameof(Route), new Dictionary<string, object?>()
+            {
+                { LogAttributeNames.FromAirportId, _data.FromAirportId },
+                { LogAttributeNames.ToAirportId, _data.ToAirportId }
+            });
         }
     }
 }

@@ -74,6 +74,7 @@ public class ExceptionHandler : IExceptionHandler
             ValidationServiceException => (StatusCodes.Status400BadRequest, LogLevel.Warning),
             EntityNotFoundException => (StatusCodes.Status404NotFound, LogLevel.Warning),
             DtoValidationException => (StatusCodes.Status400BadRequest, LogLevel.Warning),
+            EntityAlreadyExistsException => (StatusCodes.Status409Conflict, LogLevel.Warning),
             _ => (StatusCodes.Status500InternalServerError, LogLevel.Error),
         };
     }

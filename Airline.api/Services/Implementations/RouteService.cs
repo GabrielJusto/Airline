@@ -45,11 +45,6 @@ public class RouteService(
         ];
 
         ValidatorService validator = new(validations);
-        validator.Validate();
-
-        if(validator.HasErrors())
-        {
-            throw new ValidationException(string.Join("; ", validator.GetErrors()));
-        }
+        validator.ValidateAndThrow();
     }
 }

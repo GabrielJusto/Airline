@@ -8,7 +8,7 @@ public class ValidationServiceException : Exception
     public ValidationServiceException(
         IList<AirlineException> exceptions,
         string[] errors
-    )
+    ) : base("Validation failed.")
     {
         Exceptions = exceptions;
         Errors = errors;
