@@ -12,11 +12,38 @@ namespace Airline.Services.Implementations;
 public class SeatService : ISeatService
 {
     private readonly ISeatRepository _seatRepository;
+    private readonly IFlightService _flightService;
 
-    public SeatService(ISeatRepository seatRepository)
+    public SeatService(
+        ISeatRepository seatRepository,
+        IFlightService flightService
+    )
     {
         _seatRepository = seatRepository;
+        _flightService = flightService;
     }
+
+    public async Task CreateAsync(SeatCreateRequestDTO data)
+    {
+        Flight? flight = await _flightService.GetByIdAsync(data.FlightId);
+        if(flight is null)
+            throw new EntityNotFoundException(nameof(Flight), data.FlightId);
+
+        List<Seat> newSeats = new();
+
+        newSeats.AddRange(AddSeats(flight, data.QuantityEconomic, Enuns.SeatClassEnum.Economic, 6));
+        newSeats.AddRange(AddSeats(flight, data.QuantityExecutive, Enuns.SeatClassEnum.Executive, 6));
+        newSeats.AddRange(AddSeats(flight, data.QuantityFirstClass, Enuns.SeatClassEnum.FirstClass, 4));
+
+        foreach(var seat in newSeats)
+        {
+            flight.Seats.Add(seat);
+        }
+
+        await _seatRepository.AddRangeAsync(newSeats);
+
+    }
+
     public async Task<IReadOnlyList<SeatTicketListDTO>> ListAvailableSeatsForTicketAsync(SeatListFilterDTO filters)
     {
         ListAvailableSeatsForTicketValidate(filters);
@@ -41,6 +68,28 @@ public class SeatService : ISeatService
 
 
         return tickets;
+    }
+
+    private static List<Seat> AddSeats(Flight flight, int quantity, Enuns.SeatClassEnum seatClass, int seatsPerRow)
+    {
+        List<Seat> seatsList = new();
+        for(int i = 0; i < quantity; i++)
+        {
+            SeatCreateDTO seatData = new()
+            {
+                SeatNumber = (i / seatsPerRow) + 1,
+                Row = ((char)('A' + (i % seatsPerRow))).ToString(),
+                IsAvailable = true,
+                SeatClass = seatClass,
+                AircraftAverageFuelConsumption = flight.Aircraft.AverageFuelConsumption,
+                AircraftCapacity = flight.Aircraft.Capacity,
+                Distance = flight.Route.Distance
+            };
+            Seat seat = Seat.Create(seatData);
+            seat.FlightId = flight.FlightId;
+            seatsList.Add(seat);
+        }
+        return seatsList;
     }
 
     private static void ListAvailableSeatsForTicketValidate(SeatListFilterDTO filters)

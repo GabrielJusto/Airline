@@ -18,6 +18,10 @@ public class FlightService(
     private readonly IAircraftRepository _aircraftRepository = aircraftRepository;
     private readonly IRouteRepository _routeRepository = routeRepository;
 
+    public async Task<Flight?> GetByIdAsync(int flightId)
+    {
+        return await _flightRepository.GetByIdAsync(flightId);
+    }
     public async Task<int> Create(FlightCreateDTO data)
     {
         Aircraft? aircraft = _aircraftRepository.GetAircraft(data.AircraftId);
