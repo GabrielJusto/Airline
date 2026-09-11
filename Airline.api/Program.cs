@@ -61,7 +61,7 @@ builder.Services.AddScoped<IFlightRepository, FlightRepository>();
 builder.Services.AddScoped<IFlightService, FlightService>();
 builder.Services.AddScoped<ISeatCreateService, SeatCreateService>();
 builder.Services.AddScoped<ISeatRepository, SeatRepository>();
-builder.Services.AddScoped<SeatListService>();
+builder.Services.AddScoped<ISeatService, SeatService>();
 builder.Services.AddScoped<TicketPurchaseService>();
 builder.Services.AddScoped<TicketRepository>();
 builder.Services.AddScoped<AirlineUserRepository>();

@@ -1,8 +1,8 @@
 #nullable enable
 
-using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 using Airline.DTO;
@@ -12,6 +12,7 @@ using Airline.Repositories.Interfaces;
 using Airline.Services.Implementations;
 
 using Moq;
+
 using Xunit;
 
 namespace Airline.Tests.Services;

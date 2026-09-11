@@ -11,11 +11,11 @@ namespace Airline.Controllers;
 [Route("seat")]
 public class SeatController(
     ISeatCreateService seatCreateService,
-    SeatListService seatListService
+    ISeatService seatService
 ) : ControllerBase
 {
     private readonly ISeatCreateService _seatCreateService = seatCreateService;
-    private readonly SeatListService _seatListService = seatListService;
+    private readonly ISeatService _seatService = seatService;
 
     [HttpPost("create")]
     public async Task<IResult> Create([FromBody] SeatCreateRequestDTO createData)
@@ -27,7 +27,7 @@ public class SeatController(
     [HttpGet("list-available-for-ticket")]
     public async Task<IResult> ListAvailableForTicket([FromQuery] SeatListFilterDTO filters)
     {
-        List<SeatTicketListDTO> seats = await _seatListService.ListAvailableSeatsForTicket(filters);
+        IReadOnlyList<SeatTicketListDTO> seats = await _seatService.ListAvailableSeatsForTicketAsync(filters);
         return Results.Ok(seats);
     }
 }
