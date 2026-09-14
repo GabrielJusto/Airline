@@ -72,6 +72,7 @@ public class ExceptionHandler : IExceptionHandler
         {
             TicketPurchaseException => (StatusCodes.Status400BadRequest, LogLevel.Warning),
             ValidationServiceException => (StatusCodes.Status400BadRequest, LogLevel.Warning),
+            InvalidCredentialsException => (StatusCodes.Status401Unauthorized, LogLevel.Warning),
             EntityNotFoundException => (StatusCodes.Status404NotFound, LogLevel.Warning),
             DtoValidationException => (StatusCodes.Status400BadRequest, LogLevel.Warning),
             EntityAlreadyExistsException => (StatusCodes.Status409Conflict, LogLevel.Warning),

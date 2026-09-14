@@ -21,4 +21,11 @@ public class AuthenticationController(
         IdentityResult result = await _authService.RegisterUser(registerData);
         return this.Ok(result);
     }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] UserLoginDTO loginData)
+    {
+        LoginResponseDTO result = await _authService.LoginUser(loginData);
+        return this.Ok(result);
+    }
 }
