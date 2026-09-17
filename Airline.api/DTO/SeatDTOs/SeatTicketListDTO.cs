@@ -5,6 +5,7 @@ namespace Airline.DTO.SeatDTOs;
 
 public record SeatTicketListDTO
 (
+    int FlightId,
     int SeatId,
     string FromIATACode,
     string FromCity,
@@ -19,6 +20,7 @@ public record SeatTicketListDTO
 )
 {
     public SeatTicketListDTO(Seat seat) : this(
+        seat.FlightId,
         seat.SeatId,
         seat.Flight.Route.FromAirport.IATACode,
         seat.Flight.Route.FromAirport.City,

@@ -53,7 +53,7 @@ public class SeatService : ISeatService
         List<SeatTicketListDTO> tickets = seats
             .Where(s => s.IsAvailable)
             .Select(s => new SeatTicketListDTO(s))
-            .GroupBy(s => new { s.Price, s.FlightNumber })
+            .GroupBy(s => new { s.Price, s.FlightId })
             .Select(g => g.First())
             .Select(s => s with
             {
