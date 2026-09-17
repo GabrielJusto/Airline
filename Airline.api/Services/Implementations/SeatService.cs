@@ -57,11 +57,11 @@ public class SeatService : ISeatService
             .Select(g => g.First())
             .Select(s => s with
             {
-                Departure = filters.DepartureDate?.Offset != null
-                    ? s.Departure.ToOffset(filters.DepartureDate.Value.Offset)
+                Departure = filters.StartDate?.Offset != null
+                    ? s.Departure.ToOffset(filters.StartDate.Value.Offset)
                     : s.Departure,
-                Arrival = filters.DepartureDate?.Offset != null
-                    ? s.Arrival.ToOffset(filters.DepartureDate.Value.Offset)
+                Arrival = filters.StartDate?.Offset != null
+                    ? s.Arrival.ToOffset(filters.StartDate.Value.Offset)
                     : s.Arrival
             })
             .ToList();

@@ -33,11 +33,30 @@ public class SeatRepository(AirlineContext context) : ISeatRepository
         {
             query = query.Where(s => s.Flight.FlightId == filter.FlightId);
         }
-        if(filter.DepartureDate.HasValue)
+        if(filter.StartDate is DateTimeOffset startDate)
         {
-            DateTimeOffset start = filter.DepartureDate.Value.ToUniversalTime();
-            DateTimeOffset end = start.AddDays(1);
-            query = query.Where(s => s.Flight.Departure >= start && s.Flight.Departure < end);
+            DateTimeOffset start = new(
+                startDate.Year,
+                startDate.Month,
+                startDate.Day,
+                0,
+                0,
+                0,
+                startDate.Offset);
+            query = query.Where(s => s.Flight.Departure >= start.ToUniversalTime());
+        }
+
+        if(filter.EndDate is DateTimeOffset endDate)
+        {
+            DateTimeOffset end = new(
+                endDate.Year,
+                endDate.Month,
+                endDate.Day,
+                23,
+                59,
+                59,
+                endDate.Offset);
+            query = query.Where(s => s.Flight.Departure <= end.ToUniversalTime());
         }
 
         return await query
