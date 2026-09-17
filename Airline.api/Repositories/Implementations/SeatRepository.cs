@@ -17,7 +17,7 @@ public class SeatRepository(AirlineContext context) : ISeatRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<Seat>> ListAsync(SeatListFilterDTO filter)
+    public async Task<IEnumerable<Seat>> ListAsync(SeatListFilterDTO filter, CancellationToken cancellationToken = default)
     {
         IQueryable<Seat> query = _context.Seats.AsQueryable();
 

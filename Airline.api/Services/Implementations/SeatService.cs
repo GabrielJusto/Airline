@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 using Airline.DTO;
 using Airline.DTO.SeatDTOs;
 using Airline.Exceptions;
@@ -68,6 +66,12 @@ public class SeatService : ISeatService
 
 
         return tickets;
+    }
+
+    public async Task<IReadOnlyList<SeatDetailDTO>> ListAsync(SeatListFilterDTO filters, CancellationToken cancellationToken = default)
+    {
+        IEnumerable<Seat> seats = await _seatRepository.ListAsync(filters);
+        return seats.Select(s => new SeatDetailDTO(s)).ToList();
     }
 
     private static List<Seat> AddSeats(Flight flight, int quantity, Enuns.SeatClassEnum seatClass, int seatsPerRow)

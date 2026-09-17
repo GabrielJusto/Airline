@@ -27,4 +27,11 @@ public class SeatController(
         IReadOnlyList<SeatTicketListDTO> seats = await _seatService.ListAvailableSeatsForTicketAsync(filters);
         return Results.Ok(seats);
     }
+
+    [HttpGet("list")]
+    public async Task<IResult> List([FromQuery] SeatListFilterDTO filters, CancellationToken cancellationToken = default)
+    {
+        IReadOnlyList<SeatDetailDTO> seats = await _seatService.ListAsync(filters, cancellationToken);
+        return Results.Ok(seats);
+    }
 }
